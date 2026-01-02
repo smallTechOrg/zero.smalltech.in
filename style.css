@@ -1,0 +1,221 @@
+/* =====================
+   RESET
+===================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Inter, Arial, sans-serif;
+  background: #ffffff;
+  color: #0f172a;
+  overflow: hidden; /* 🚫 no scroll */
+}
+
+/* =====================
+   CONTAINER
+===================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px;
+}
+
+/* =====================
+   HEADER
+===================== */
+.header {
+  margin-bottom: 6px;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+/* =====================
+   HERO LAYOUT
+===================== */
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 32px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+/* =====================
+   HERO LEFT
+===================== */
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+
+/* 🔼 HERO ROBOT (SLIGHTLY BIGGER) */
+.hero-bot {
+  width: 145px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+.hero-text h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.hero-text p {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 6px;
+  max-width: 420px;
+}
+
+/* =========================
+   HOW IT WORKS – FIGMA FIX
+========================= */
+
+.section-title {
+  text-align: center;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 14px 0 12px;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.feature {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 12px 10px;
+  text-align: center;
+}
+
+.feature-icon {
+  width: 28px;          /* smaller than robot */
+  height: 28px;
+  margin: 0 auto 8px;
+  background: #eef2ff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon img {
+  width: 14px;
+  height: 14px;
+}
+
+.feature h4 {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature p {
+  font-size: 12px;
+  line-height: 1.35;
+  color: #64748b;
+  max-width: 200px;
+  margin: 0 auto;
+}
+
+/* =====================
+   HERO RIGHT
+===================== */
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* 🔽 CRM IMAGE (SLIGHTLY SMALLER) */
+.crm {
+  width: 85%;
+  max-width: 340px;
+  margin-bottom: 12px;
+}
+
+/* CHECKLIST */
+.checklist {
+  list-style: none;
+  margin-bottom: 12px;
+}
+
+.checklist li {
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+/* CTA BUTTON */
+.cta {
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 11px 18px;
+  font-size: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* =====================
+   CHAT BUTTON
+===================== */
+.chat-btn {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 48px;
+  height: 48px;
+  background: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.chat-btn img {
+  width: 19px;
+}
+
+/* =====================
+   RESPONSIVE (ALLOW SCROLL)
+===================== */
+@media (max-width: 900px) {
+  body {
+    overflow: auto;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-bot {
+    width: 120px;
+  }
+}
