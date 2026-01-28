@@ -636,7 +636,7 @@
                             </label>
                             <span id="yearlyLabel" class="text-sm font-bold text-slate-400 transition-colors flex items-center gap-2">
                                 Yearly Billing
-                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-black">SAVE 60%</span>
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-black">SAVE 25%</span>
                             </span>
                         </div>
 
@@ -649,7 +649,7 @@
                                 <ul class="space-y-4 mb-10 flex-grow">
                                     <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
                                         <iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="20"></iconify-icon>
-                                        1,000 Conversations/mo
+                                        500 Conversations/mo
                                     </li>
                                 </ul>
                                 <button onclick="openModal()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all">Start Free</button>
@@ -658,13 +658,13 @@
                                 <div class="mb-8">
                                     <h3 class="text-lg font-bold text-slate-400 uppercase tracking-widest mb-4">Basic Plan</h3>
                                     <div class="text-5xl font-black text-slate-900">
-                                        $<span id="basicPrice">20</span><span class="text-lg font-medium text-slate-400">/mo</span>
+                                        $<span id="basicPrice">4</span><span class="text-lg font-medium text-slate-400">/mo</span>
                                     </div>
                                 </div>
                                 <ul class="space-y-4 mb-10 flex-grow">
                                     <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
                                         <iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="20"></iconify-icon>
-                                        3,500 Conversations/mo
+                                        2000 Conversations/mo
                                     </li>
                                 </ul>
                                 <button onclick="openModal()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all">Select Basic</button>
@@ -673,13 +673,13 @@
                                 <div class="mb-8">
                                     <h3 class="text-lg font-bold text-blue-100 uppercase tracking-widest mb-4">Pro Plan</h3>
                                     <div class="text-5xl font-black">
-                                        $<span id="proPrice">40</span><span class="text-lg font-medium opacity-70">/mo</span>
+                                        $<span id="proPrice">12</span><span class="text-lg font-medium opacity-70">/mo</span>
                                     </div>
                                 </div>
                                 <ul class="space-y-4 mb-10 flex-grow">
                                     <li class="flex items-center gap-3 text-sm font-bold">
                                         <iconify-icon icon="solar:check-circle-bold" width="20"></iconify-icon>
-                                        7,500 Conversations/mo
+                                        Unlimited Conversations/mo
                                     </li>
                                 </ul>
                                 <button onclick="openModal()" class="w-full py-4 bg-white text-blue-600 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-xl">Get Pro Access</button>
@@ -722,13 +722,13 @@
             const yearlyLabel = document.getElementById('yearlyLabel');
 
             if (isYearly) {
-                basicPrice.textContent = "8";
-                proPrice.textContent = "16";
+                basicPrice.textContent = "3";
+                proPrice.textContent = "10";
                 monthlyLabel.classList.replace('text-slate-900', 'text-slate-400');
                 yearlyLabel.classList.replace('text-slate-400', 'text-slate-900');
             } else {
-                basicPrice.textContent = "20";
-                proPrice.textContent = "40";
+                basicPrice.textContent = "4";
+                proPrice.textContent = "12";
                 monthlyLabel.classList.replace('text-slate-400', 'text-slate-900');
                 yearlyLabel.classList.replace('text-slate-900', 'text-slate-400');
             }
