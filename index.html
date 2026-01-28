@@ -1,11 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ZERO – AI Agents for Small Businesses</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Google tag (gtag.js) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZER0 — Conversational AI Chat Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Outfit', sans-serif; }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes float-delayed {
+            0% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-10px) translateX(10px); }
+            100% { transform: translateY(0px) translateX(0px); }
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        @keyframes highlight-row {
+            0% { background: transparent; }
+            10% { background: rgba(59, 130, 246, 0.1); }
+            100% { background: transparent; }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; }
+        .cursor-blink { animation: blink 1s infinite; }
+        .row-update { animation: highlight-row 2s ease-out forwards; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        #leadModal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #leadModal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .page-content {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        /* Dropdown Styles */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 220px;
+            background: white;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 1.25rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -6px rgba(0, 0, 0, 0.04);
+            padding: 0.75rem;
+            z-index: 60;
+        }
+        .dropdown-container:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .industry-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .industry-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .industry-scroll::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        .industry-btn {
+            @apply w-full text-left px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-all;
+        }
+
+        .subpage-visual-blob {
+            background: linear-gradient(135deg, #3b82f6 0%, #818cf8 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        }
+
+        .toggle-dot {
+            transition: transform 0.3s ease-in-out;
+        }
+        input:checked ~ .toggle-dot {
+            transform: translateX(100%);
+        }
+
+        /* CRM Animation Item Styling */
+        .crm-item {
+            transition: all 0.5s ease;
+        }
+    </style>
+
+     <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-L1SLDVPSX2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -14,6 +116,7 @@
     gtag('config', 'G-L1SLDVPSX2');
   </script>
 
+  <!-- Chat Widget Script */ -->
   <script
           src="https://smalltech.in/embed.js"
           data-chat-url="https://smalltech.in/embed"
@@ -21,75 +124,734 @@
           async
         ></script>
 </head>
-<body>
+<body class="bg-white text-slate-500 antialiased selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
 
-<header class="header">
-  <div class="container">
-    <h1 class="logo">ZER0</h1>
-    <p class="tagline">AI Agents for Small Businesses</p>
-  </div>
-</header>
-
-<main class="container">
-
-  <!-- HERO -->
-  <section class="hero">
-
-    <!-- LEFT -->
-    <div class="hero-left">
-
-      <div class="hero-top">
-        <img src="assets/hero-bot.svg" alt="AI Agent" class="hero-bot">
-
-        <div class="hero-text">
-          <h2>Embeddable Smart Agent<br>For Your Website</h2>
-          <p>
-            Bring life into your static website by embedding our smart AI agent.
-          </p>
+    <!-- Lead Form Modal -->
+    <div id="leadModal" class="fixed inset-0 z-[100] items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl transform transition-all relative">
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+                <iconify-icon icon="solar:close-circle-linear" width="28"></iconify-icon>
+            </button>
+            <h3 class="text-2xl font-semibold text-slate-900 mb-2">Get Started with ZER0</h3>
+            <p class="text-slate-500 mb-6">Enter your details and our team will reach out to help you set up your smart agent.</p>
+            
+            <iframe src="https://form.typeform.com/to/VJB22RPe" frameborder="0" width="100%" height="400px" style="border-radius: 1rem;"></iframe>
+            
+            <div id="successMsg" class="hidden absolute inset-0 bg-white rounded-3xl flex flex-col items-center justify-center text-center p-8">
+                <iconify-icon icon="solar:check-circle-bold" class="text-green-500 mb-4" width="64"></iconify-icon>
+                <h4 class="text-xl font-semibold text-slate-900">Request Sent!</h4>
+                <p class="text-slate-500 mt-2">We'll be in touch very soon.</p>
+                <button onclick="closeModal()" class="mt-6 text-blue-600 font-medium">Close</button>
+            </div>
         </div>
-      </div>
-
-      <h3 class="section-title">How it works?</h3>
-
-      <div class="features">
-        <div class="feature">
-          <img src="assets/faq.png" alt="">
-          <h4>Answer FAQs</h4>
-          <p>Responds instantly to all your customer questions.</p>
-        </div>
-
-        <div class="feature">
-          <img src="assets/leads.png" alt="">
-          <h4>Collect Leads</h4>
-          <p>Captures contact details directly in your CRM dashboard.</p>
-        </div>
-
-        <div class="feature">
-          <img src="assets/support.png" alt="">
-          <h4>24/7 Support</h4>
-          <p>Works as a reception desk round-the-clock.</p>
-        </div>
-      </div>
-
     </div>
 
-    <!-- RIGHT -->
-    <div class="hero-right">
-      <img src="assets/crm.png" alt="CRM Dashboard" class="crm">
-
-      <ul class="checklist">
-        <li>✔ Easy to Embed</li>
-        <li>✔ 1000 Free Conversations</li>
-        <li>✔ Built-in CRM</li>
-        <li>✔ ZER0 Tech Expertise Required</li>
-      </ul>
-
-    </div>
-
-  </section>
-
-</main>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 top-0 glass-panel">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group" onclick="navigateTo('home')">
+                    <div class="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-blue-600/20">
+                        <iconify-icon icon="solar:chat-round-dots-linear" width="22"></iconify-icon>
+                    </div>
+                    <span class="text-xl font-bold tracking-tighter text-slate-900">ZER0</span>
+                </div>
+                
+                <div class="hidden lg:flex items-center space-x-8">
 
 
+                    <button onclick="navigateTo('pricing')" class="nav-link text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Pricing</button>
+                    <button onClick="window.open('https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1', '_blank')"class="nav-link text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">About</button>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button onclick="openModal()" class="px-5 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 transition-all transform hover:-translate-y-0.5">
+                        Get Started
+                    </button>
+                </div>
+
+                <button class="lg:hidden text-slate-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="28"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main id="main-content" class="page-content">
+        <!-- Content will be injected here -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">Join ZER0 today.</h2>
+            <div class="mb-12">
+                <a href="mailto:zero@smalltech.in" class="inline-flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors font-medium">
+                    <iconify-icon icon="solar:letter-linear" width="20"></iconify-icon>
+                    zero@smalltech.in
+                </a>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
+                <button onclick="openModal()" class="px-8 py-3.5 bg-white text-slate-900 rounded-full font-bold hover:bg-blue-50 transition-all text-sm">Get Started</button>
+                
+                <a href="https://calendly.com/admin-madhyamakist/30min" target="_blank">
+                <button class="px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">Book a Demo</button>
+                    </a>
+            </div>
+            <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+                        <iconify-icon icon="solar:chat-round-dots-linear" width="18"></iconify-icon>
+                    </div>
+                    <span class="text-xl font-bold tracking-tighter">ZER0</span>
+                </div>
+                <p class="text-slate-500 text-sm font-medium">© 2026 ZER0. Built for the modern web.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let homeAnimationInterval = null;
+        let crmDataIndex = 0;
+        const crmContacts = [
+            { name: "Alex Rivera", email: "alex@r.com", source: "E-COM" },
+            { name: "Sarah Chen", email: "s.chen@dev.io", source: "WEB" },
+            { name: "Marcus Wright", email: "m.wright@xyz.co", source: "API" },
+            { name: "Elena Rossi", email: "elena@rossi.it", source: "ADS" },
+            { name: "James Wilson", email: "james@tech.com", source: "CRM" },
+            { name: "Sofia Gomez", email: "sofia@global.es", source: "E-COM" },
+            { name: "David Kim", email: "dk@startup.kr", source: "WEB" }
+        ];
+
+        const pages = {
+            home: `
+                <section class="relative pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
+                        <div class="absolute top-20 left-10 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+                        <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
+                    </div>
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                            <div class="w-full lg:w-1/2 text-left">
+                                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold mb-8">
+                                    <span class="relative flex h-2 w-2">
+                                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                      <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                                    </span>
+                                    NEW: SMART AGENTS V2.0
+                                </div>
+                                <h1 class="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-black mb-8 leading-[0.95]">
+                                    Embeddable <br>
+                                    Smart Agent<br>
+                                    <span class="text-blue-600">For Your Site</span>
+                                </h1>
+                                <p class="text-xl text-slate-500 mb-10 max-w-xl leading-relaxed font-medium">
+                                    Bring life into your static website by embedding our smart AI agent.
+                                </p>
+                                <div class="flex flex-col sm:flex-row gap-3 max-w-md">
+                                    <button onclick="openModal()" class="flex-1 px-6 py-3.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/20 group transform hover:-translate-y-0.5">
+                                        <iconify-icon icon="solar:bolt-bold" class="text-white" width="18"></iconify-icon>
+                                        Get Started
+                                    </button>
+                                    <!--
+                                    <button class="flex-1 px-6 py-3.5 text-sm font-bold text-slate-900 bg-white border border-slate-200 rounded-full hover:bg-slate-50 transition-all flex items-center justify-center gap-2.5 shadow-sm transform hover:-translate-y-0.5">
+                                        <iconify-icon icon="solar:chat-round-dots-linear" class="text-blue-600" width="18"></iconify-icon>
+                                        Explore ZER0
+                                    </button>
+                                    -->
+                                </div>
+                            </div>
+                            <div class="w-full lg:w-1/2 relative">
+                                <div class="relative bg-white border border-slate-100 rounded-[3rem] p-6 shadow-2xl animate-float">
+                                    <!-- Custom UI Mockup -->
+                                    <div class="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 h-[450px] flex flex-col">
+                                        <div class="bg-white p-4 border-b border-slate-200 flex items-center justify-between">
+                                            <div class="flex gap-0.5">
+                                                <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                                <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                                            </div>
+                                            <div class="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-400">zer0-platform.ai</div>
+                                            <div class="w-4"></div>
+                                        </div>
+                                        <div class="flex-grow p-6 flex flex-col gap-4">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-10 h-10 rounded-2xl bg-blue-600 shadow-lg shadow-blue-500/20"></div>
+                                                <div class="space-y-2 flex-grow">
+                                                    <div class="h-2.5 bg-slate-200 rounded-full w-1/2"></div>
+                                                    <div class="h-2.5 bg-slate-200 rounded-full w-1/3"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-200/50 flex-grow relative">
+                                                <div class="flex flex-col gap-4">
+                                                    <div class="flex justify-end">
+                                                        <div class="bg-blue-600 text-white text-[11px] font-medium p-3 rounded-2xl rounded-tr-none max-w-[80%]">
+                                                            "How do I setup the AI agent on my Shopify store?"
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex justify-start">
+                                                        <div class="bg-slate-100 text-slate-700 text-[11px] font-medium p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                                                            "Just copy the 1-line script into your Shopify theme settings. Would you like me to send you the guide?"
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="absolute bottom-6 left-6 right-6 flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-full">
+                                                    <div class="w-3 h-3 rounded-full bg-blue-500 animate-pulse"></div>
+                                                    <div class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Bot is typing...</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Floating Metric -->
+                                    <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float-delayed hidden md:block">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600">
+                                                <iconify-icon icon="solar:cup-bold" width="24"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <div class="text-xs font-black text-slate-400 uppercase tracking-widest">Leads Captured</div>
+                                                <div class="text-2xl font-black text-slate-900">+1,420</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="pb-32 bg-white">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">How it works?</h2>
+                            <p class="text-lg text-slate-500 font-medium max-w-2xl mx-auto">Transform your website from a static page into a dynamic conversation engine in minutes.</p>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/5 transition-all group">
+                                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                    <iconify-icon icon="solar:question-square-bold" width="30"></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Answer FAQs</h3>
+                                <p class="text-sm text-slate-500 leading-relaxed font-medium">Responds instantly to all your customer questions with human-like precision.</p>
+                            </div>
+
+                            <div class="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/5 transition-all group">
+                                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                    <iconify-icon icon="solar:user-plus-bold" width="30"></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">Collect Leads</h3>
+                                <p class="text-sm text-slate-500 leading-relaxed font-medium">Captures contact details directly in your CRM dashboard while you sleep.</p>
+                            </div>
+
+                            <div class="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/5 transition-all group">
+                                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                    <iconify-icon icon="solar:clock-circle-bold" width="30"></iconify-icon>
+                                </div>
+                                <h3 class="text-xl font-bold text-slate-900 mb-3">24/7 Support</h3>
+                                <p class="text-sm text-slate-500 leading-relaxed font-medium">Works as a dedicated reception desk round-the-clock, every single day.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="py-24 bg-blue-600 text-white relative overflow-hidden">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                        <div class="flex flex-col lg:flex-row items-center gap-16">
+                            <div class="w-full lg:w-5/12">
+                                <h2 class="text-4xl lg:text-5xl font-bold mb-8 leading-tight text-white">Automation that <br>actually works.</h2>
+                                <ul class="space-y-6 text-blue-50 font-semibold text-lg">
+                                    <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-blue-300" width="24"></iconify-icon>Easy to Embed</li>
+                                    <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-blue-300" width="24"></iconify-icon>1000 Free Conversations</li>
+                                    <li class="flex items-center gap-3"><iconify-icon icon="solar:check-circle-bold" class="text-blue-300" width="24"></iconify-icon>Built-in CRM</li>
+                                </ul>
+                            </div>
+                            <div class="w-full lg:w-7/12 relative">
+                                <div class="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-[3rem] p-8 lg:p-12 shadow-2xl overflow-visible aspect-[4/3] flex items-center justify-center">
+                                    <div class="w-full h-full grid grid-cols-2 gap-8 items-center relative">
+                                        <div class="bg-white rounded-2xl shadow-2xl p-4 h-64 flex flex-col border border-slate-100 transform -rotate-1 z-10">
+                                            <div class="bg-blue-600 rounded-xl p-4 w-11/12 ml-auto text-[11px] text-white font-mono leading-relaxed shadow-lg min-h-[60px]">
+                                                <span id="typingText"></span><span class="w-0.5 h-3 bg-white cursor-blink inline-block align-middle ml-1"></span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-white rounded-2xl shadow-2xl p-6 h-64 border border-slate-100 transform rotate-1 overflow-hidden z-10 flex flex-col">
+                                            <div id="crmContainer" class="space-y-2">
+                                                <!-- Dynamic CRM contacts will appear here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            sales: `
+                <section class="pt-40 pb-20 relative overflow-hidden">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="flex flex-col lg:flex-row items-center gap-16">
+                            <div class="lg:w-1/2">
+                                <span class="text-blue-600 font-bold tracking-widest uppercase text-xs mb-4 block">Sales Intelligence & Revenue Acceleration</span>
+                                <h1 class="text-6xl font-black text-slate-900 mb-6 leading-tight">AI Lead Generation: Close deals while you sleep.</h1>
+                                <p class="text-xl text-slate-500 mb-10 leading-relaxed font-medium">ZER0 identifies high-intent visitors, answers complex pricing questions, and books meetings automatically. It's the AI sales assistant that never takes a day off, optimized for high conversion rates.</p>
+                                <div class="flex gap-4">
+                                    <button onclick="openModal()" class="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all">Optimize Sales Funnel</button>
+                                </div>
+                            </div>
+                            <div class="lg:w-1/2 relative">
+                                <div class="subpage-visual-blob w-full aspect-square flex items-center justify-center p-12">
+                                    <div class="bg-white rounded-[2rem] shadow-2xl p-8 w-full border border-blue-50">
+                                        <div class="flex items-center gap-3 mb-6">
+                                            <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                            <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div class="h-4 bg-slate-100 rounded-full w-3/4"></div>
+                                            <div class="h-4 bg-slate-100 rounded-full w-1/2"></div>
+                                            <div class="h-20 bg-blue-50 rounded-2xl border-2 border-dashed border-blue-200 flex items-center justify-center">
+                                                <span class="text-blue-600 font-bold text-sm">Automated Lead Qualified: $12k Opportunity</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-24 bg-slate-50">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="text-center mb-16">
+                            <h2 class="text-3xl font-bold text-slate-900">Maximize Conversational Commerce ROI</h2>
+                            <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Scale your sales operation with intelligent automation that works across your entire customer lifecycle.</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                                <iconify-icon icon="solar:graph-up-bold" class="text-blue-600 mb-4" width="32"></iconify-icon>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Automated Lead Scoring</h3>
+                                <p class="text-slate-500 text-sm">Intelligently qualify prospects based on behavioral signals. Our AI ensures your sales team focuses only on high-value, hot leads.</p>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                                <iconify-icon icon="solar:calendar-bold" class="text-blue-600 mb-4" width="32"></iconify-icon>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">24/7 Meeting Scheduling</h3>
+                                <p class="text-slate-500 text-sm">Integrated with Google Calendar and Outlook. Book demos and sales calls directly inside the chat window to reduce friction.</p>
+                            </div>
+                            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                                <iconify-icon icon="solar:dollar-bold" class="text-blue-600 mb-4" width="32"></iconify-icon>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Sales Pipeline Integration</h3>
+                                <p class="text-slate-500 text-sm">Sync leads directly to Salesforce, HubSpot, or Pipedrive. Keep your sales pipeline updated in real-time with conversational data.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            support: `
+                <section class="pt-40 pb-20 bg-white">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="flex flex-col lg:flex-row-reverse items-center gap-16">
+                            <div class="lg:w-1/2 text-left">
+                                <span class="text-blue-600 font-bold tracking-widest uppercase text-xs mb-4 block">CX Automation & Support Excellence</span>
+                                <h1 class="text-6xl font-black text-slate-900 mb-6 leading-tight">Customer Support Automation: Instant answers, 24/7.</h1>
+                                <p class="text-xl text-slate-500 mb-10 leading-relaxed font-medium">Reduce resolution times from hours to milliseconds. ZER0’s intelligent support agents connect to your documentation to resolve complex product queries and technical issues without human intervention.</p>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <button onclick="openModal()" class="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all">Scale My Support</button>
+                                </div>
+                            </div>
+                            <div class="lg:w-1/2">
+                                <div class="bg-indigo-600 rounded-[3rem] p-12 relative overflow-hidden group">
+                                    <div class="relative z-10">
+                                        <div class="flex gap-4 mb-6">
+                                            <div class="w-12 h-12 rounded-full bg-white/20"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-3 bg-white/40 rounded-full w-1/3"></div>
+                                                <div class="h-24 bg-white rounded-2xl p-4 text-xs font-medium text-slate-700 leading-relaxed shadow-lg">
+                                                    "I found the technical documentation for your SSO setup. Here is the step-by-step guide to resolving the 403 error."
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-white/10 rounded-full group-hover:scale-110 transition-transform duration-700"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-24 bg-slate-50">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="grid md:grid-cols-4 gap-6">
+                            <div class="p-6 bg-white border border-slate-100 rounded-3xl hover:shadow-md transition-all">
+                                <div class="text-blue-600 font-black text-3xl mb-2">90%</div>
+                                <div class="text-slate-900 font-bold mb-1">Ticket Deflection</div>
+                                <p class="text-slate-500 text-xs">Standardize common query responses and resolve repetitive tickets automatically.</p>
+                            </div>
+                            <div class="p-6 bg-white border border-slate-100 rounded-3xl hover:shadow-md transition-all">
+                                <div class="text-blue-600 font-black text-3xl mb-2">< 5s</div>
+                                <div class="text-slate-900 font-bold mb-1">Response Time</div>
+                                <p class="text-slate-500 text-xs">AI never puts a customer on hold. Eliminate wait times and increase CSAT scores.</p>
+                            </div>
+                            <div class="p-6 bg-white border border-slate-100 rounded-3xl hover:shadow-md transition-all">
+                                <div class="text-blue-600 font-black text-3xl mb-2">50+</div>
+                                <div class="text-slate-900 font-bold mb-1">Languages</div>
+                                <p class="text-slate-500 text-xs">Provide global customer support in over 50 languages without hiring expensive teams.</p>
+                            </div>
+                            <div class="p-6 bg-white border border-slate-100 rounded-3xl hover:shadow-md transition-all">
+                                <div class="text-blue-600 font-black text-3xl mb-2">24/7</div>
+                                <div class="text-slate-900 font-bold mb-1">Always-On</div>
+                                <p class="text-slate-500 text-xs">Consistent, high-quality service during nights, weekends, and holidays.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            industry: (name) => {
+                const configs = {
+                    'E-Commerce': { 
+                        icon: 'solar:bag-bold', 
+                        feature: 'Product Recommendations', 
+                        desc: 'Sync with your inventory for live stock updates and tailored suggestions.',
+                        seoTitle: 'Conversational E-Commerce & AI Personalization',
+                        seoText: 'Boost your Average Order Value (AOV) and reduce cart abandonment with AI shopping assistants.'
+                    },
+                    'Customer Service': { 
+                        icon: 'solar:headset-bold', 
+                        feature: 'Knowledge Sync', 
+                        desc: 'Connect to Zendesk, Intercom, or Notion to build a custom brain.',
+                        seoTitle: 'Omnichannel Customer Experience (CX) Solutions',
+                        seoText: 'Deliver a unified support experience across all digital touchpoints.'
+                    },
+                    'Education': { 
+                        icon: 'solar:notebook-bold', 
+                        feature: 'Enrollment Assistant', 
+                        desc: 'Guide students through courses and handle admissions questions.',
+                        seoTitle: 'EdTech AI & Student Engagement Automation',
+                        seoText: 'Streamline the student journey from inquiry to enrollment with high-efficiency AI.'
+                    },
+                    'Enterprises': { 
+                        icon: 'solar:buildings-bold', 
+                        feature: 'SSO & Security', 
+                        desc: 'Enterprise-grade encryption with custom deployments for large teams.',
+                        seoTitle: 'Enterprise AI Strategy & Governance',
+                        seoText: 'Scale AI across your organization with robust security protocols and HIPAA/SOC2 readiness.'
+                    },
+                    'Healthcare': { 
+                        icon: 'solar:heart-pulse-bold', 
+                        feature: 'HIPAA Compliant', 
+                        desc: 'Secure patient intake and appointment reminders with privacy first.',
+                        seoTitle: 'Secure Healthcare AI & Patient Communication',
+                        seoText: 'Improve patient outcomes through better communication and automated triage.'
+                    },
+                    'Insurance': { 
+                        icon: 'solar:shield-check-bold', 
+                        feature: 'Policy Explainer', 
+                        desc: 'Simplify complex policy terms and assist with initial claim reports.',
+                        seoTitle: 'InsurTech AI & Claims Process Automation',
+                        seoText: 'Accelerate claims processing and policy renewals with intelligent underwriting assistance.'
+                    },
+                    'IT Support': { 
+                        icon: 'solar:monitor-bold', 
+                        feature: 'Auto-Ticketing', 
+                        desc: 'Automatically log issues in Jira or ServiceNow with full chat logs.',
+                        seoTitle: 'ITSM Automation & Internal AI Support',
+                        seoText: 'Reduce IT overhead by automating Tier-1 support and password resets.'
+                    },
+                    'Real Estate': { 
+                        icon: 'solar:home-2-bold', 
+                        feature: 'Property Tours', 
+                        desc: 'Book viewings and pre-qualify buyers based on budget and location.',
+                        seoTitle: 'Real Estate Lead Nurturing & AI Virtual Assistants',
+                        seoText: 'Capture high-quality real estate leads around the clock and pre-screen prospects.'
+                    },
+                    'Recruitment': { 
+                        icon: 'solar:users-group-rounded-bold', 
+                        feature: 'Resume Screening', 
+                        desc: 'Pre-screen candidates and schedule interviews with top talent.',
+                        seoTitle: 'HR Tech & AI-Driven Talent Acquisition',
+                        seoText: 'Transform your hiring process with AI recruitment and automated screening.'
+                    },
+                    'Sales': { 
+                        icon: 'solar:ticker-star-bold', 
+                        feature: 'Proactive Outreach', 
+                        desc: 'Trigger chats based on pricing page scrolls and exit intent.',
+                        seoTitle: 'B2B Sales Automation & Revenue Operations (RevOps)',
+                        seoText: 'Optimize your sales velocity with intelligent AI agents across the entire funnel.'
+                    },
+                    'Small Business': { 
+                        icon: 'solar:shop-bold', 
+                        feature: 'Simple Setup', 
+                        desc: 'Affordable, no-code AI that levels the playing field with giants.',
+                        seoTitle: 'Affordable AI for SMBs & Local Businesses',
+                        seoText: 'Compete with big brands by offering premium, 24/7 customer service at an SMB price.'
+                    }
+                };
+                const config = configs[name] || configs['Small Business'];
+
+                return `
+                <section class="pt-40 pb-20 bg-slate-50">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <div class="flex flex-col lg:flex-row items-center gap-16 mb-20">
+                            <div class="lg:w-3/5">
+                                <div class="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-500/20">
+                                    <iconify-icon icon="${config.icon}" width="36"></iconify-icon>
+                                </div>
+                                <h1 class="text-6xl font-black text-slate-900 mb-6 tracking-tight">${config.seoTitle}</h1>
+                                <p class="text-xl text-slate-500 font-medium leading-relaxed mb-8">
+                                    ${config.seoText}
+                                </p>
+                                <div class="flex flex-wrap gap-4">
+                                    <button onclick="openModal()" class="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all">Get ${name} Case Study</button>
+                                </div>
+                            </div>
+                            <div class="lg:w-2/5">
+                                <div class="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 animate-float">
+                                    <h3 class="text-xl font-bold text-slate-900 mb-6">Industry-Specific AI</h3>
+                                    <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-4">
+                                        <h4 class="font-bold text-blue-700 mb-2">${config.feature}</h4>
+                                        <p class="text-blue-900/60 text-sm leading-relaxed">${config.desc}</p>
+                                    </div>
+                                    <div class="space-y-4 pt-4 border-t border-slate-100">
+                                        <div class="flex items-center gap-3 text-slate-600 text-xs font-bold uppercase tracking-wider">
+                                            <iconify-icon icon="solar:check-circle-bold" class="text-green-500" width="16"></iconify-icon>
+                                            GDPR & SOC2 Ready
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                `;
+            },
+            pricing: `
+                <section class="pt-40 pb-20 lg:pt-56 lg:pb-32 text-center relative overflow-hidden">
+                    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                        <h2 class="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">Flexible plans for every scale.</h2>
+                        <div class="flex items-center justify-center gap-4 mb-16">
+                            <span id="monthlyLabel" class="text-sm font-bold text-slate-900 transition-colors">Monthly Billing</span>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="billingToggle" class="sr-only peer" onchange="togglePricing(this.checked)">
+                                <div class="w-14 h-8 bg-slate-200 rounded-full peer-checked:bg-blue-600 transition-colors"></div>
+                                <div class="toggle-dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow-md"></div>
+                            </label>
+                            <span id="yearlyLabel" class="text-sm font-bold text-slate-400 transition-colors flex items-center gap-2">
+                                Yearly Billing
+                                <span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-black">SAVE 25%</span>
+                            </span>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="p-10 bg-white rounded-[2.5rem] border border-slate-200 text-left hover:border-blue-200 hover:shadow-xl transition-all flex flex-col">
+                                <div class="mb-8">
+                                    <h3 class="text-lg font-bold text-slate-400 uppercase tracking-widest mb-4">Free Plan</h3>
+                                    <div class="text-5xl font-black text-slate-900">Free</div>
+                                </div>
+                                <ul class="space-y-4 mb-10 flex-grow">
+                                    <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                                        <iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="20"></iconify-icon>
+                                        500 Conversations/mo
+                                    </li>
+                                </ul>
+                                <button onclick="openModal()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all">Start Free</button>
+                            </div>
+                            <div class="p-10 bg-white rounded-[2.5rem] border border-slate-200 text-left hover:border-blue-200 hover:shadow-xl transition-all flex flex-col">
+                                <div class="mb-8">
+                                    <h3 class="text-lg font-bold text-slate-400 uppercase tracking-widest mb-4">Basic Plan</h3>
+                                    <div class="text-5xl font-black text-slate-900">
+                                        $<span id="basicPrice">4</span><span class="text-lg font-medium text-slate-400">/mo</span>
+                                    </div>
+                                </div>
+                                <ul class="space-y-4 mb-10 flex-grow">
+                                    <li class="flex items-center gap-3 text-sm font-bold text-slate-700">
+                                        <iconify-icon icon="solar:check-circle-bold" class="text-blue-600" width="20"></iconify-icon>
+                                        2000 Conversations/mo
+                                    </li>
+                                </ul>
+                                <button onclick="openModal()" class="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all">Select Basic</button>
+                            </div>
+                            <div class="p-10 bg-blue-600 rounded-[2.5rem] text-white text-left shadow-2xl shadow-blue-600/30 transform md:scale-105 flex flex-col relative overflow-hidden">
+                                <div class="mb-8">
+                                    <h3 class="text-lg font-bold text-blue-100 uppercase tracking-widest mb-4">Pro Plan</h3>
+                                    <div class="text-5xl font-black">
+                                        $<span id="proPrice">12</span><span class="text-lg font-medium opacity-70">/mo</span>
+                                    </div>
+                                </div>
+                                <ul class="space-y-4 mb-10 flex-grow">
+                                    <li class="flex items-center gap-3 text-sm font-bold">
+                                        <iconify-icon icon="solar:check-circle-bold" width="20"></iconify-icon>
+                                        Unlimited Conversations/mo
+                                    </li>
+                                </ul>
+                                <button onclick="openModal()" class="w-full py-4 bg-white text-blue-600 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-xl">Get Pro Access</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            about: `
+                <section class="pt-40 pb-20 lg:pt-56 lg:pb-40">
+                    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+                        <h2 class="text-5xl font-black text-slate-900 mb-8 tracking-tight">Humanizing Digital Interactions through AI.</h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                <div class="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform">50M+</div>
+                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Chats</div>
+                            </div>
+                            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                <div class="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform">10k+</div>
+                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Clients</div>
+                            </div>
+                            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                <div class="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform">24/7</div>
+                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Uptime</div>
+                            </div>
+                            <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group">
+                                <div class="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform">0.1s</div>
+                                <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Latency</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        };
+
+        function togglePricing(isYearly) {
+            const basicPrice = document.getElementById('basicPrice');
+            const proPrice = document.getElementById('proPrice');
+            const monthlyLabel = document.getElementById('monthlyLabel');
+            const yearlyLabel = document.getElementById('yearlyLabel');
+
+            if (isYearly) {
+                basicPrice.textContent = "3";
+                proPrice.textContent = "10";
+                monthlyLabel.classList.replace('text-slate-900', 'text-slate-400');
+                yearlyLabel.classList.replace('text-slate-400', 'text-slate-900');
+            } else {
+                basicPrice.textContent = "4";
+                proPrice.textContent = "12";
+                monthlyLabel.classList.replace('text-slate-400', 'text-slate-900');
+                yearlyLabel.classList.replace('text-slate-900', 'text-slate-400');
+            }
+        }
+
+        function navigateTo(pageId, extraParam = null) {
+            const main = document.getElementById('main-content');
+            main.style.opacity = 0;
+            
+            if (homeAnimationInterval) {
+                clearInterval(homeAnimationInterval);
+                homeAnimationInterval = null;
+            }
+            
+            setTimeout(() => {
+                if (pageId === 'industry') {
+                    main.innerHTML = pages.industry(extraParam);
+                } else {
+                    main.innerHTML = pages[pageId];
+                }
+                
+                main.style.opacity = 1;
+                window.scrollTo(0,0);
+                
+                if (pageId === 'home') {
+                    startContinuousHomeAnimation();
+                }
+
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    const text = link.textContent.trim().toLowerCase();
+                    if ((pageId === 'sales' || pageId === 'support') && text.includes('solutions')) {
+                        link.classList.add('text-blue-600');
+                    } else if (pageId === 'industry' && text.includes('industry')) {
+                        link.classList.add('text-blue-600');
+                    } else if (text === pageId) {
+                        link.classList.add('text-blue-600');
+                    } else {
+                        link.classList.remove('text-blue-600');
+                    }
+                });
+            }, 300);
+        }
+
+        function startContinuousHomeAnimation() {
+            runHomeAnimationSequence();
+            homeAnimationInterval = setInterval(() => {
+                runHomeAnimationSequence();
+            }, 12000); // Sequence slightly longer to accommodate multiple CRM entries
+        }
+
+        function runHomeAnimationSequence() {
+            const typingText = document.getElementById('typingText');
+            const crmContainer = document.getElementById('crmContainer');
+            if (!typingText || !crmContainer) return;
+
+            const sequences = [
+                "I'd like to book a demo. I'm looking to automate my client intake process.",
+                "How much does the Enterprise plan cost for a team of 50?",
+                "Can I integrate this with my existing HubSpot setup?",
+                "Does the AI support multi-language customer queries?",
+                "We need a solution for our e-commerce returns process."
+            ];
+            
+            // Pick a message based on overall count or random
+            const currentMessage = sequences[crmDataIndex % sequences.length];
+            let charIndex = 0;
+
+            typingText.textContent = "";
+
+            const typeInterval = setInterval(() => {
+                if (charIndex < currentMessage.length) {
+                    typingText.textContent += currentMessage.charAt(charIndex);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                    setTimeout(() => {
+                        addCrmLead();
+                    }, 800);
+                }
+            }, 40);
+        }
+
+        function addCrmLead() {
+            const container = document.getElementById('crmContainer');
+            if (!container) return;
+
+            const contact = crmContacts[crmDataIndex % crmContacts.length];
+            crmDataIndex++;
+
+            const leadDiv = document.createElement('div');
+            leadDiv.className = "crm-item grid grid-cols-3 gap-3 p-3 rounded-xl border border-transparent opacity-0 translate-y-4";
+            leadDiv.innerHTML = `
+                <span class="text-[10px] font-bold text-slate-900">${contact.name}</span>
+                <span class="text-[10px] text-slate-600 truncate">${contact.email}</span>
+                <span class="text-[9px] px-2 py-1 bg-green-100 text-green-700 font-black rounded-full text-center">NEW ${contact.source}</span>
+            `;
+
+            // Prep container (keep max 4 items for visual clarity)
+            const children = container.children;
+            if (children.length >= 4) {
+                const last = children[children.length - 1];
+                last.classList.replace('opacity-100', 'opacity-0');
+                last.classList.add('translate-y-2');
+                setTimeout(() => last.remove(), 500);
+            }
+
+            container.prepend(leadDiv);
+
+            // Trigger reflow for animation
+            setTimeout(() => {
+                leadDiv.classList.remove('opacity-0', 'translate-y-4');
+                leadDiv.classList.add('opacity-100', 'translate-y-0', 'row-update');
+            }, 50);
+        }
+
+        function openModal() { document.getElementById('leadModal').classList.add('active'); }
+        function closeModal() { document.getElementById('leadModal').classList.remove('active'); }
+        function handleForm(e) { 
+            e.preventDefault(); 
+            document.getElementById('successMsg').classList.remove('hidden');
+        }
+
+        window.onload = () => navigateTo('home');
+    </script>
 </body>
 </html>
