@@ -135,19 +135,7 @@
             <h3 class="text-2xl font-semibold text-slate-900 mb-2">Get Started with ZER0</h3>
             <p class="text-slate-500 mb-6">Enter your details and our team will reach out to help you set up your smart agent.</p>
             
-            <form onsubmit="handleForm(event)" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
-                    <input type="text" id="modalName" required placeholder="John Doe" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
-                    <input type="email" id="modalEmail" required placeholder="john@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
-                </div>
-                <button type="submit" class="w-full py-4 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20 mt-2">
-                    Submit Request
-                </button>
-            </form>
+            <iframe src="https://form.typeform.com/to/VJB22RPe" frameborder="0" width="100%" height="400px" style="border-radius: 1rem;"></iframe>
             
             <div id="successMsg" class="hidden absolute inset-0 bg-white rounded-3xl flex flex-col items-center justify-center text-center p-8">
                 <iconify-icon icon="solar:check-circle-bold" class="text-green-500 mb-4" width="64"></iconify-icon>
@@ -173,7 +161,7 @@
 
 
                     <button onclick="navigateTo('pricing')" class="nav-link text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">Pricing</button>
-                    <button onclick="navigateTo('about')" class="nav-link text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">About</button>
+                    <button onClick="window.open('https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1', '_blank')"class="nav-link text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors">About</button>
                 </div>
 
                 <div class="hidden md:flex items-center space-x-4">
@@ -207,7 +195,10 @@
 
             <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
                 <button onclick="openModal()" class="px-8 py-3.5 bg-white text-slate-900 rounded-full font-bold hover:bg-blue-50 transition-all text-sm">Get Started</button>
+                
+                <a href="https://calendly.com/admin-madhyamakist/30min" target="_blank">
                 <button class="px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">Book a Demo</button>
+                    </a>
             </div>
             <div class="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
                 <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('home')">
