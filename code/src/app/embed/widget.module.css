@@ -18,8 +18,8 @@
   justify-content: space-between;
   padding: 20px 24px;
   background: var(--chat-primary, #219EBC);
-  color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--chat-primary-text, white);
+  border-bottom: 1px solid color-mix(in srgb, var(--chat-primary-text, white) 15%, transparent);
   flex-shrink: 0;
 }
 
@@ -34,7 +34,7 @@
   width: 36px;
   height: 36px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, var(--chat-primary-text, white) 20%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,6 +50,7 @@
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
+  color: inherit;
 }
 
 .headerSubtitle {
@@ -57,10 +58,11 @@
   opacity: 0.9;
   margin: 4px 0 0 0;
   line-height: 1.2;
+  color: inherit;
 }
 
 .closeButton {
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb, var(--chat-primary-text, white) 15%, transparent);
   border: none;
   border-radius: 6px;
   width: 32px;
@@ -70,13 +72,13 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: white;
+  color: var(--chat-primary-text, white);
   font-size: 18px;
   flex-shrink: 0;
 }
 
 .closeButton:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: color-mix(in srgb, var(--chat-primary-text, white) 25%, transparent);
   transform: scale(1.05);
 }
 
@@ -183,6 +185,7 @@
 .messageText {
   margin: 0;
   font-weight: 400;
+  color: inherit;
 }
 
 /* Markdown content inside bot messages */
@@ -493,18 +496,5 @@
   }
 }
 
-/* Dark mode support (optional) */
-@media (prefers-color-scheme: dark) {
-  .chatContainer {
-    background: #023047;
-  }
-  
-  .messagesContainer::-webkit-scrollbar-track {
-    background: #034063;
-  }
-  
-  .input {
-    background: #034063;
-    color: #ffffff;
-  }
-}
+/* Dark mode support — defer to CSS variable palette; no overrides needed.
+   The color palette set via JS already ensures contrast for any base color. */

@@ -6,6 +6,7 @@
 
 interface ColorPalette {
   primary: string;
+  primaryText: string;
   primaryLight: string;
   primaryDark: string;
   primarySubtle: string;
@@ -115,8 +116,9 @@ export function generateColorPalette(baseColor: string): ColorPalette {
 
   return {
     primary: baseColor,
-    primaryLight: hslToHex(h, Math.max(s - 10, 20), Math.min(l + 15, 90)),
-    primaryDark: hslToHex(h, Math.min(s + 10, 100), Math.max(l - 15, 10)),
+    primaryText: isLight ? '#023047' : '#ffffff',
+    primaryLight: hslToHex(h, Math.max(s - 10, 20), Math.max(Math.min(l + 15, 90), 60)),
+    primaryDark: hslToHex(h, Math.min(s + 10, 100), Math.min(Math.max(l - 15, 10), 40)),
     primarySubtle: hslToHex(h, subtleSaturation, subtleLightness),
 
     surface: '#ffffff',
@@ -142,6 +144,7 @@ export function applyColorPalette(palette: ColorPalette): void {
   const root = document.documentElement;
 
   root.style.setProperty('--chat-primary', palette.primary);
+  root.style.setProperty('--chat-primary-text', palette.primaryText);
   root.style.setProperty('--chat-primary-light', palette.primaryLight);
   root.style.setProperty('--chat-primary-dark', palette.primaryDark);
   root.style.setProperty('--chat-primary-subtle', palette.primarySubtle);
