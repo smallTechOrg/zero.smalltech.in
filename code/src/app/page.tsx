@@ -166,7 +166,7 @@ type PageId = "home" | "pricing" | "sales" | "support" | "about" | "industry";
 /*  Page: Home                                                         */
 /* ------------------------------------------------------------------ */
 
-function HomePage({ openModal }: { openModal: () => void }) {
+function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }) {
   const typingRef = useRef<HTMLSpanElement>(null);
   const crmRef = useRef<HTMLDivElement>(null);
   const indexRef = useRef(0);
@@ -273,7 +273,7 @@ function HomePage({ openModal }: { openModal: () => void }) {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md">
                 <button
-                  onClick={openModal}
+                  onClick={() => openChatWidget("I want to get started with Zer0")}
                   className="flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
                 >
                   <Icon
@@ -470,7 +470,7 @@ function HomePage({ openModal }: { openModal: () => void }) {
 /*  Page: Pricing                                                      */
 /* ------------------------------------------------------------------ */
 
-function PricingPage({ openModal }: { openModal: () => void }) {
+function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => void }) {
   const [yearly, setYearly] = useState(false);
 
   return (
@@ -525,7 +525,7 @@ function PricingPage({ openModal }: { openModal: () => void }) {
               </li>
             </ul>
             <button
-              onClick={openModal}
+              onClick={() => openChatWidget("I want to start with the free plan")}
               className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Start Free
@@ -554,7 +554,7 @@ function PricingPage({ openModal }: { openModal: () => void }) {
               </li>
             </ul>
             <button
-              onClick={openModal}
+              onClick={() => openChatWidget("I want to start with the basic plan")}
               className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Select Basic
@@ -579,7 +579,7 @@ function PricingPage({ openModal }: { openModal: () => void }) {
               </li>
             </ul>
             <button
-              onClick={openModal}
+              onClick={() => openChatWidget("I want to start with the pro plan")}
               className="w-full py-4 bg-white text-pacific rounded-2xl font-bold hover:bg-sky/30 transition-all shadow-xl"
             >
               Get Pro Access
@@ -595,7 +595,7 @@ function PricingPage({ openModal }: { openModal: () => void }) {
 /*  Page: Sales                                                        */
 /* ------------------------------------------------------------------ */
 
-function SalesPage({ openModal }: { openModal: () => void }) {
+function SalesPage({ openChatWidget }: { openChatWidget: (msg?: string) => void }) {
   return (
     <>
       <section className="pt-40 pb-20 relative overflow-hidden">
@@ -614,7 +614,7 @@ function SalesPage({ openModal }: { openModal: () => void }) {
                 sales assistant that never takes a day off.
               </p>
               <button
-                onClick={openModal}
+                onClick={() => openChatWidget("I want to optimize my sales funnel with Zer0")}
                 className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Optimize Sales Funnel
@@ -699,7 +699,7 @@ function SalesPage({ openModal }: { openModal: () => void }) {
 /*  Page: Support                                                      */
 /* ------------------------------------------------------------------ */
 
-function SupportPage({ openModal }: { openModal: () => void }) {
+function SupportPage({ openChatWidget }: { openChatWidget: (msg?: string) => void }) {
   return (
     <>
       <section className="pt-40 pb-20 bg-white">
@@ -719,7 +719,7 @@ function SupportPage({ openModal }: { openModal: () => void }) {
                 human intervention.
               </p>
               <button
-                onClick={openModal}
+                onClick={() => openChatWidget("I want to scale my customer support with Zer0")}
                 className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Scale My Support
@@ -796,10 +796,10 @@ function SupportPage({ openModal }: { openModal: () => void }) {
 
 function IndustryPage({
   industry,
-  openModal,
+  openChatWidget,
 }: {
   industry: IndustryKey;
-  openModal: () => void;
+  openChatWidget: (msg?: string) => void;
 }) {
   const config = INDUSTRY_CONFIGS[industry] ?? INDUSTRY_CONFIGS["Small Business"];
   return (
@@ -817,7 +817,7 @@ function IndustryPage({
               {config.seoText}
             </p>
             <button
-              onClick={openModal}
+              onClick={() => openChatWidget(`I'd like to learn more about Zer0 for ${industry}`)}
               className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
             >
               Get {industry} Case Study
@@ -897,10 +897,11 @@ function AboutPage() {
 export default function Home() {
   const [page, setPage] = useState<PageId>("home");
   const [industry, setIndustry] = useState<IndustryKey>("Small Business");
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const openModal = useCallback(() => setModalOpen(true), []);
-  const closeModal = useCallback(() => setModalOpen(false), []);
+  const openChatWidget = useCallback((message?: string) => {
+    window.dispatchEvent(
+      new CustomEvent("open-chat-widget", { detail: message ? { message } : undefined })
+    );
+  }, []);
 
   const navigateTo = useCallback(
     (id: PageId, industryParam?: IndustryKey) => {
@@ -926,34 +927,6 @@ export default function Home() {
         data-colour="#219EBC"
         strategy="lazyOnload"
       />
-
-      {/* Lead Form Modal */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
-          <div className="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl relative">
-            <button
-              onClick={closeModal}
-              className="absolute top-6 right-6 text-navy/40 hover:text-navy/70"
-            >
-              <Icon icon="solar:close-circle-linear" width={28} />
-            </button>
-            <h3 className="text-2xl font-semibold text-navy mb-2">
-              Get Started with ZER0
-            </h3>
-            <p className="text-navy/60 mb-6">
-              Enter your details and our team will reach out to help you set up
-              your smart agent.
-            </p>
-            <iframe
-              src="https://form.typeform.com/to/VJB22RPe"
-              frameBorder="0"
-              width="100%"
-              height="400px"
-              style={{ borderRadius: "1rem" }}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Navigation */}
       <nav className="fixed w-full z-50 transition-all duration-300 top-0 glass-panel">
@@ -996,7 +969,7 @@ export default function Home() {
             {/* CTA */}
             <div className="hidden md:flex items-center space-x-4">
               <button
-                onClick={openModal}
+                onClick={() => openChatWidget("I want to get started with Zer0")}
                 className="px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
                 Get Started
@@ -1013,12 +986,12 @@ export default function Home() {
 
       {/* Page content */}
       <div className="page-content">
-        {page === "home" && <HomePage openModal={openModal} />}
-        {page === "pricing" && <PricingPage openModal={openModal} />}
-        {page === "sales" && <SalesPage openModal={openModal} />}
-        {page === "support" && <SupportPage openModal={openModal} />}
+        {page === "home" && <HomePage openChatWidget={openChatWidget} />}
+        {page === "pricing" && <PricingPage openChatWidget={openChatWidget} />}
+        {page === "sales" && <SalesPage openChatWidget={openChatWidget} />}
+        {page === "support" && <SupportPage openChatWidget={openChatWidget} />}
         {page === "industry" && (
-          <IndustryPage industry={industry} openModal={openModal} />
+          <IndustryPage industry={industry} openChatWidget={openChatWidget} />
         )}
         {page === "about" && <AboutPage />}
       </div>
@@ -1039,7 +1012,7 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
             <button
-              onClick={openModal}
+              onClick={() => openChatWidget("I want to get started with Zer0")}
               className="px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
               Get Started

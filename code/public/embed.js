@@ -34,8 +34,10 @@
   iframeWrapper.style.borderRadius = "16px";
   iframeWrapper.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";
   iframeWrapper.style.zIndex = "999999";
-  iframeWrapper.style.transition = "all 0.3s ease";
+  iframeWrapper.style.transition = "opacity 0.35s ease, transform 0.35s ease";
   iframeWrapper.style.display = "none";
+  iframeWrapper.style.opacity = "0";
+  iframeWrapper.style.transform = "translateY(20px) scale(0.97)";
   iframeWrapper.style.overflow = "hidden";
   iframeWrapper.style.background = "white";
 
@@ -114,21 +116,52 @@
         trackAnalyticsEvent(eventName, eventParams);
       } else if (type === "CLOSE_CHAT") {
         // Handle close chat message from iframe
-        iframeWrapper.style.display = "none";
+        iframeWrapper.style.opacity = "0";
+        iframeWrapper.style.transform = "translateY(20px) scale(0.97)";
+        setTimeout(function () { iframeWrapper.style.display = "none"; }, 350);
         bubbleText.style.display = "block";
+        chatIsOpen = false;
       }
     }
   });
 
-  bubble.addEventListener("click", () => {
-    iframeWrapper.style.display = "block";
+  var chatIsOpen = false;
+
+  function openChat(message) {
     bubbleText.style.display = "none";
-    // Track bubble click in host website's GA4
+    iframeWrapper.style.display = "block";
+    // Trigger reflow so the transition plays
+    void iframeWrapper.offsetHeight;
+    iframeWrapper.style.opacity = "1";
+    iframeWrapper.style.transform = "translateY(0) scale(1)";
+    chatIsOpen = true;
+
+    // If a pre-filled message was supplied, forward it to the iframe
+    if (message && typeof message === "string") {
+      // Small delay to let the iframe finish loading / re-rendering
+      setTimeout(function () {
+        iframe.contentWindow.postMessage({ type: "SEND_MESSAGE", text: message }, "*");
+      }, 600);
+    }
+
+    // Track in host website's GA4
     trackAnalyticsEvent("chat_bubble_clicked", {
       event_category: "chat_widget",
       event_label: "floating_bubble",
     });
+  }
+
+  bubble.addEventListener("click", function () { openChat(); });
+
+  // Allow the host page to open the chat programmatically (with optional message)
+  window.addEventListener("open-chat-widget", function (e) {
+    openChat(e.detail && e.detail.message ? e.detail.message : undefined);
   });
+
+  // Auto-open the chat after 10 seconds on the page
+  setTimeout(function () {
+    if (!chatIsOpen) openChat();
+  }, 10000);
 
   function addChatElements() {
     document.body.appendChild(iframeWrapper);

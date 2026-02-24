@@ -174,6 +174,54 @@ export function useChat(hostWebsite: string = "") {
         }
     }, [messages, isBotProcessing]);
 
+    // Programmatic send (no form event required)
+    const sendMessageDirect = async (text: string) => {
+        const userMsg = text.trim();
+        if (!userMsg || isBotProcessing) return;
+
+        setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
+        setInput("");
+        setisBotProcessing(true);
+
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+            const payload = {
+                input: userMsg,
+                session_id: sessionId.current,
+                request_type: "sales",
+            };
+
+            const url = `${process.env.NEXT_PUBLIC_API_URL}/chat${hostWebsite ? `?origin=${encodeURIComponent(hostWebsite)}` : ''}`;
+            const res = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                signal: controller.signal,
+            });
+            clearTimeout(timeout);
+
+            const data = await res.json();
+            setisBotProcessing(false);
+
+            setMessages((prev) => [
+                ...prev,
+                {
+                    sender: data.success ? "Bot" : "Error",
+                    text: data.success ? data.response : data.error || "Something went wrong.",
+                },
+            ]);
+        } catch (err) {
+            setisBotProcessing(false);
+            const errorMsg =
+                (err as Error).name === "AbortError"
+                    ? "Request timed out. Please try again."
+                    : "Network or server issue.";
+            setMessages((prev) => [...prev, { sender: "Error", text: errorMsg }]);
+        }
+    };
+
     return {
         chatBoxText,
         messages,
@@ -181,6 +229,7 @@ export function useChat(hostWebsite: string = "") {
         isClient,
         isBotProcessing,
         sendMessage,
+        sendMessageDirect,
         setInput,
     };
 }

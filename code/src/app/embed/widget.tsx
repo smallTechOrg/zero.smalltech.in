@@ -1,7 +1,7 @@
 "use client";
 import { useChat } from "../hooks/useChat";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { generateColorPalette, applyColorPalette, getThemeColor } from "./colorTheme";
 import styles from "./widget.module.css";
 
@@ -23,8 +23,21 @@ export default function Chat() {
     isClient,
     isBotProcessing,
     sendMessage,
+    sendMessageDirect,
     setInput,
   } = useChat(hostWebsite);
+
+  // Listen for pre-filled messages from the parent (embed.js)
+  const sendMessageDirectCb = useCallback(sendMessageDirect, [sendMessageDirect]);
+  useEffect(() => {
+    const handler = (event: MessageEvent) => {
+      if (event.data && event.data.type === "SEND_MESSAGE" && event.data.text) {
+        sendMessageDirectCb(event.data.text);
+      }
+    };
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, [sendMessageDirectCb]);
 
   const handleClose = () => {
     // Send close message to parent window

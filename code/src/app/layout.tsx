@@ -11,11 +11,11 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "ZER0 — Conversational AI Chat Platform",
+  title: "ZER0 — AI Agents for Small Businesses",
   description:
     "AI Agents for Small Businesses. Embeddable Smart Agent for your website.",
   openGraph: {
-    title: "ZER0 — Conversational AI Chat Platform",
+    title: "ZER0 — AI Agents for Small Businesses",
     description:
       "AI Agents for Small Businesses. Embeddable Smart Agent for your website.",
     url: "https://zero.smalltech.in",
