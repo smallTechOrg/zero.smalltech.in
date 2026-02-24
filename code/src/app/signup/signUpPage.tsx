@@ -315,7 +315,7 @@ export default function SignUpPage() {
               id="su-prompt"
               value={customPrompt}
               onChange={(e) => setCustomPrompt(e.target.value)}
-              placeholder="My company is a SaaS startup that provides AI-powered analytics tools for e-commerce businesses. We help online retailers optimize their sales and marketing strategies using data-driven insights. Our target audience is small to ...."
+              placeholder="We are a SaaS startup. Our name is XYZ enterprise. We provide AI-powered analytics tools for e-commerce businesses. We help online retailers optimize their sales and marketing strategies using data-driven insights. Our target audience is small to ...."
               rows={3}
               className="w-full px-5 py-3.5 rounded-xl border border-sky/50 bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-pacific/40 focus:border-pacific transition-all text-sm font-medium resize-none"
             />
