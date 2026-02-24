@@ -1,4 +1,24 @@
 (function () {
+  // --- Color helpers ---
+  function isLightColor(hex) {
+    hex = hex.replace('#', '');
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.5;
+  }
+  function lightTint(hex, amount) {
+    hex = hex.replace('#', '');
+    var r = parseInt(hex.substring(0, 2), 16);
+    var g = parseInt(hex.substring(2, 4), 16);
+    var b = parseInt(hex.substring(4, 6), 16);
+    var m = amount || 0.85;
+    var tr = Math.round(r + (255 - r) * m);
+    var tg = Math.round(g + (255 - g) * m);
+    var tb = Math.round(b + (255 - b) * m);
+    return '#' + tr.toString(16).padStart(2, '0') + tg.toString(16).padStart(2, '0') + tb.toString(16).padStart(2, '0');
+  }
+
   const script = document.currentScript;
   const chatUrl =
     document.currentScript.getAttribute("data-chat-url") ||
@@ -58,19 +78,16 @@
   bubbleText.style.position = "fixed";
   bubbleText.style.bottom = "60px";
   bubbleText.style.right = "140px";
-  bubbleText.style.background = "#8ECAE6";
-  bubbleText.style.background = "rgba(142, 202, 230, 0.25)";
-  bubbleText.style.backgroundOpacity = "0.1";
+  bubbleText.style.background = lightTint(customColour, 0.85);
   bubbleText.style.padding = "8px 12px";
   bubbleText.style.borderRadius = "12px";
   bubbleText.style.boxShadow = "0 4px 10px rgba(0,0,0,0.12)";
-  bubbleText.style.border = "2px solid #8ECAE6";
+  bubbleText.style.border = "2px solid " + lightTint(customColour, 0.55);
   bubbleText.style.zIndex = "999997";
   bubbleText.style.fontSize = "16px";
-    bubbleText.style.fontWeight = "600";
-  // Ensure bubbleText color is readable on light background
-  // For very dark colours, use as-is; but ensure minimum contrast
-  bubbleText.style.color = customColour;
+  bubbleText.style.fontWeight = "600";
+  // Ensure readable contrast: dark colour on light tint, or dark fallback on light colour tint
+  bubbleText.style.color = isLightColor(customColour) ? '#1a1a1a' : customColour;
 
   // Floating chat bubble
   const bubble = document.createElement("div");
@@ -83,7 +100,7 @@
   bubble.style.height = "60px";
   bubble.style.borderRadius = "50%";
   bubble.style.background = customColour;
-  bubble.style.color = "white";
+  bubble.style.color = isLightColor(customColour) ? '#1a1a1a' : 'white';
   bubble.style.display = "flex";
   bubble.style.alignItems = "center";
   bubble.style.justifyContent = "center";
