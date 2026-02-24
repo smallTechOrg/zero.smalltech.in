@@ -274,7 +274,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
               <div className="flex flex-col sm:flex-row gap-3 max-w-md">
                 <button
                   onClick={() => openChatWidget("I want to get started with Zer0")}
-                  className="flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
+                  className="cursor-pointer flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
                 >
                   <Icon
                     icon="solar:bolt-bold"
@@ -526,7 +526,7 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
             </ul>
             <button
               onClick={() => openChatWidget("I want to start with the free plan")}
-              className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
+              className="cursor-pointer w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Start Free
             </button>
@@ -555,7 +555,7 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
             </ul>
             <button
               onClick={() => openChatWidget("I want to start with the basic plan")}
-              className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
+              className="cursor-pointer w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Select Basic
             </button>
@@ -580,7 +580,7 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
             </ul>
             <button
               onClick={() => openChatWidget("I want to start with the pro plan")}
-              className="w-full py-4 bg-white text-pacific rounded-2xl font-bold hover:bg-sky/30 transition-all shadow-xl"
+              className="cursor-pointer w-full py-4 bg-white text-pacific rounded-2xl font-bold hover:bg-sky/30 transition-all shadow-xl"
             >
               Get Pro Access
             </button>
@@ -615,7 +615,7 @@ function SalesPage({ openChatWidget }: { openChatWidget: (msg?: string) => void 
               </p>
               <button
                 onClick={() => openChatWidget("I want to optimize my sales funnel with Zer0")}
-                className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
+                className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Optimize Sales Funnel
               </button>
@@ -720,7 +720,7 @@ function SupportPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               </p>
               <button
                 onClick={() => openChatWidget("I want to scale my customer support with Zer0")}
-                className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
+                className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Scale My Support
               </button>
@@ -818,7 +818,7 @@ function IndustryPage({
             </p>
             <button
               onClick={() => openChatWidget(`I'd like to learn more about Zer0 for ${industry}`)}
-              className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
+              className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
             >
               Get {industry} Case Study
             </button>
@@ -970,7 +970,7 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-4">
               <button
                 onClick={() => openChatWidget("I want to get started with Zer0")}
-                className="px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
+                className="cursor-pointer px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
                 Get Started
               </button>
@@ -1013,7 +1013,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
             <button
               onClick={() => openChatWidget("I want to get started with Zer0")}
-              className="px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
+              className="cursor-pointer px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
               Get Started
             </button>
