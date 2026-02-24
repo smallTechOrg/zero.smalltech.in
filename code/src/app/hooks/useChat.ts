@@ -40,7 +40,7 @@ export function useChat(hostWebsite: string = "") {
     const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState("");
     const [isClient, setIsClient] = useState(false);
-    const [isBotProcessing, setisBotProcessing] = useState(false);
+    const [isBotProcessing, setisBotProcessing] = useState(true); // Start true to show typing on initial load
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
 
@@ -71,8 +71,11 @@ export function useChat(hostWebsite: string = "") {
                 } else {
                     console.error("Unexpected status from /history", res.status, data);
                 }
+                // Hide typing indicator after history loads
+                setisBotProcessing(false);
             } catch (err) {
                 console.error("Failed to initialize chat history", err);
+                setisBotProcessing(false);
             }
         };
 

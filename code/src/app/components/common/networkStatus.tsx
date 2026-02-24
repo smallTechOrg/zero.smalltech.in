@@ -13,12 +13,12 @@ export default function NetworkStatusBanner({ loading = false }: Props) {
   return (
     <div className="space-y-2 text-sm text-center">
       {!isOnline && (
-        <p className="bg-red-600 text-white py-2 px-2">
+        <p className="bg-tangerine text-white py-2 px-2">
           You are offline. Some features may not work properly.
         </p>
       )}
       {isOnline && slowLoading && (
-        <p className="text-yellow-600">
+        <p className="text-amber">
           Still working on it—this may take a few more seconds.
         </p>
       )}

@@ -15,9 +15,9 @@ import {
 const PAGE_SIZE = 50;
 
 const statusColors: Record<LeadStatus, string> = {
-    OPEN: "text-blue-700 font-semibold",
-    CLOSED: "text-red-600 font-semibold",
-    QUALIFYING: "text-green-800 font-semibold",
+    OPEN: "text-pacific font-semibold",
+    CLOSED: "text-tangerine font-semibold",
+    QUALIFYING: "text-amber font-semibold",
 };
 
 export default function DashboardPage({ initialRows }: { initialRows: LeadRowData[] }) {
@@ -49,9 +49,9 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
     };
 
     const headerClass =
-        'px-4 py-3 text-left text-sm font-semibold text-white bg-brown';
+        'px-4 py-3 text-left text-sm font-semibold text-white bg-navy';
     const cellClass =
-        'px-4 py-3 text-sm text-white/90 border-t border-cinereous';
+        'px-4 py-3 text-sm text-white/90 border-t border-sky';
 
     const columns = useMemo<ColumnDef<LeadRowData>[]>(() => [
         {
@@ -65,7 +65,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                     <>
                     <button
                         type="button"
-                        className="hover:text-blue-300"
+                        className="hover:text-sky"
                         onClick={() => {
                             setExpanded((e) => ({ ...e, [r.session_id]: !isOpen }));
                             if (!isOpen && !histories[r.session_id] && !historyLoading[r.session_id]) {
@@ -160,11 +160,11 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
     return (
         <section className="p-6">
             <h1 className="text-xl mb-4 text-white">Dashboard</h1>
-            {error && <div className="mb-3 text-yellow-200">{error}</div>}
+            {error && <div className="mb-3 text-amber">{error}</div>}
 
             {/* Desktop table */}
             <div
-                className="overflow-x-auto rounded-lg shadow-md hidden md:block bg-brown"
+                className="overflow-x-auto rounded-lg shadow-md hidden md:block bg-navy"
                 >
                 <table className="min-w-full">
                     <thead>
@@ -184,7 +184,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                             const isOpen = !!expanded[original.session_id];
                             return (
                                 <React.Fragment key={row.id}>
-                                    <tr className="bg-liver">
+                                    <tr className="bg-navy">
                                         {row.getVisibleCells().map((cell) => (
                                             <td key={cell.id} className={cellClass}>
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -192,9 +192,9 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                                         ))}
                                     </tr>
                                     {isOpen && (
-                                        <tr className="bg-liver">
+                                        <tr className="bg-navy">
                                             <td className="px-4 py-3 text-sm text-white/80" colSpan={row.getVisibleCells().length}>
-                                                <div className="rounded-lg p-3 bg-brown">
+                                                <div className="rounded-lg p-3 bg-navy">
                                                     <div className="mb-2 text-xs text-white/70">
                                                         <strong>Session ID:</strong> {original.session_id}
                                                     </div>
@@ -202,7 +202,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                                                         <div className="text-white/70">Loading history…</div>
                                                     )}
                                                     {!historyLoading[original.session_id] && historyError[original.session_id] && (
-                                                        <div className="text-yellow-200">{historyError[original.session_id]}</div>
+                                                        <div className="text-amber">{historyError[original.session_id]}</div>
                                                     )}
                                                     {!historyLoading[original.session_id] && !historyError[original.session_id] && (
                                                         <div className="flex flex-col space-y-2">
@@ -213,8 +213,8 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                                                                 <div
                                                                     key={i}
                                                                     className={`max-w-[85%] px-3 py-[1%] rounded-lg ${msg.sender === 'You'
-                                                                        ? 'bg-redwood self-end text-cinereous font-semibold'
-                                                                        : 'bg-cinereous self-start text-brown font-semibold'
+                                                                        ? 'bg-pacific self-end text-white font-semibold'
+                                                                        : 'bg-sky self-start text-navy font-semibold'
                                                                         }`}
                                                                 >
                                                                     {msg.text}
@@ -238,12 +238,12 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                 {pagedRows.map((r) => {
                     const isOpen = !!expanded[r.session_id];
                     return (
-                        <div key={r.session_id} className="rounded-lg shadow-md p-4 bg-liver bg-brown">
+                        <div key={r.session_id} className="rounded-lg shadow-md p-4 bg-navy">
                             <div className="flex items-center justify-between">
                                 <div className="text-white font-semibold">{r.name}</div>
                                 <button
                                     type="button"
-                                    className="text-blue-300"
+                                    className="text-sky"
                                     onClick={() => {
                                         setExpanded((e) => ({ ...e, [r.session_id]: !isOpen }));
                                         if (!isOpen && !histories[r.session_id] && !historyLoading[r.session_id]) {
@@ -289,7 +289,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                             
 
                             {isOpen && (
-                                <div className="mt-3 rounded-lg p-3 bg-brown">
+                                <div className="mt-3 rounded-lg p-3 bg-navy">
                                     <div className="mb-2 text-xs text-white/70">
                                         <strong>Session ID:</strong> {r.session_id}
                                     </div>
@@ -297,7 +297,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                                         <div className="text-white/70">Loading history…</div>
                                     )}
                                     {!historyLoading[r.session_id] && historyError[r.session_id] && (
-                                        <div className="text-yellow-200">{historyError[r.session_id]}</div>
+                                        <div className="text-amber">{historyError[r.session_id]}</div>
                                     )}
                                     {!historyLoading[r.session_id] && !historyError[r.session_id] && (
                                         <div className="flex flex-col space-y-2">
@@ -308,8 +308,8 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                                                 <div
                                                     key={i}
                                                     className={`max-w-[85%] px-3 py-[1%] rounded-lg ${msg.sender === 'You'
-                                                        ? 'bg-redwood self-end text-cinereous font-semibold'
-                                                        : 'bg-cinereous self-start text-brown font-semibold'
+                                                        ? 'bg-pacific self-end text-white font-semibold'
+                                                        : 'bg-sky self-start text-navy font-semibold'
                                                         }`}
                                                 >
                                                     {msg.text}
@@ -328,28 +328,28 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
                 <div className="text-sm">Page {currentPage} of {totalPages}</div>
                 <div className="flex gap-2">
                     <button type="button"
-                        className="px-3 py-2 rounded-md bg-caput text-white disabled:opacity-50"
+                        className="px-3 py-2 rounded-md bg-tangerine text-white disabled:opacity-50"
                         onClick={() => goToPage(1)}
                         disabled={currentPage === 1}
                     >
                         « First
                     </button>
                     <button type="button"
-                        className="px-3 py-2 rounded-md bg-caput text-white disabled:opacity-50"
+                        className="px-3 py-2 rounded-md bg-tangerine text-white disabled:opacity-50"
                         onClick={() => goToPage(currentPage - 1)}
                         disabled={currentPage === 1}
                     >
                         ‹ Prev
                     </button>
                     <button type="button"
-                        className="px-3 py-2 rounded-md bg-caput text-white disabled:opacity-50"
+                        className="px-3 py-2 rounded-md bg-tangerine text-white disabled:opacity-50"
                         onClick={() => goToPage(currentPage + 1)}
                         disabled={currentPage === totalPages}
                     >
                         Next ›
                     </button>
                     <button type="button"
-                        className="px-3 py-2 rounded-md bg-caput text-white disabled:opacity-50"
+                        className="px-3 py-2 rounded-md bg-tangerine text-white disabled:opacity-50"
                         onClick={() => goToPage(totalPages)}
                         disabled={currentPage === totalPages}
                     >
@@ -364,7 +364,7 @@ export default function DashboardPage({ initialRows }: { initialRows: LeadRowDat
 function DeleteButton({ onClick }: { onClick: () => void }) {
     return (
         <button
-            className="px-3 py-2 rounded-md bg-[var(--color-rose)] text-white disabled:opacity-60"
+            className="px-3 py-2 rounded-md bg-amber text-white disabled:opacity-60"
             onClick={onClick}
         >
             Delete
@@ -392,21 +392,21 @@ function RowRemarks({
         <div className="flex items-start gap-2">
             {isEditing ? (
                 <textarea
-                    className="w-full px-3 py-2 rounded-lg bg-[var(--color-khaki)] text-black placeholder-grey/60 text-opacity-60"
+                    className="w-full px-3 py-2 rounded-lg bg-sky text-navy placeholder-navy/60"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     placeholder="Add remarks"
                     rows={PAGE_SIZE}
                 />
             ) : (
-                <div className="w-full min-h-[2.5rem] px-3 py-2 rounded-lg bg-[var(--color-khaki)] text-black whitespace-pre-wrap">
+                <div className="w-full min-h-[2.5rem] px-3 py-2 rounded-lg bg-sky text-navy whitespace-pre-wrap">
                     {value || 'Add remarks'}
                 </div>
             )}
             {isEditing ? (
                 <button
                     type="button"
-                    className="px-3 py-2 rounded-md bg-[var(--color-rose)] text-white disabled:opacity-60"
+                    className="px-3 py-2 rounded-md bg-amber text-white disabled:opacity-60"
                     onClick={async () => {
                         await onSave(sessionId, value);
                         setIsEditing(false);
@@ -419,7 +419,7 @@ function RowRemarks({
                 <button
                     type="button"
                     aria-label="Edit remarks"
-                    className="p-2 rounded-md bg-[var(--color-rose)] text-white hover:opacity-90"
+                    className="p-2 rounded-md bg-amber text-white hover:opacity-90"
                     onClick={() => setIsEditing(true)}
                 >
                     ✎

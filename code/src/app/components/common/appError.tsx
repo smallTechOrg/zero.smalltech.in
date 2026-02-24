@@ -12,7 +12,7 @@ export default function AppErrorBanner({ errors = [] }: Props) {
   return (
     <div className="space-y-2 text-sm text-center">
       {visibleErrors.map((err, idx) => (
-        <p key={idx} className="text-red-600">{err}</p>
+        <p key={idx} className="text-tangerine">{err}</p>
       ))}
     </div>
   );

@@ -18,7 +18,7 @@
   //  const enableMobile = attr === null ? true : attr === "true";
 
   // Get custom colour if provided
-  const customColour = script.getAttribute("data-colour") || "#5A2A27";
+  const customColour = script.getAttribute("data-colour") || "#219EBC";
 
   // Get custom tagline if provided
   const customTagline = script.getAttribute("data-tagline") || "Talk to our AI Agent now";
@@ -48,26 +48,7 @@
   iframe.style.borderRadius = "16px";
   iframeWrapper.appendChild(iframe);
 
-  // Close button
-  const closeBtn = document.createElement("div");
-  closeBtn.innerHTML = "✖";
-  closeBtn.style.position = "absolute";
-  closeBtn.style.top = "8px";
-  closeBtn.style.right = "8px";
-  closeBtn.style.cursor = "pointer";
-  closeBtn.style.fontSize = "18px";
-  closeBtn.style.background = "rgba(0,0,0,0.1)";
-  closeBtn.style.width = "28px";
-  closeBtn.style.height = "28px";
-  closeBtn.style.borderRadius = "50%";
-  closeBtn.style.display = "flex";
-  closeBtn.style.alignItems = "center";
-  closeBtn.style.justifyContent = "center";
-  closeBtn.addEventListener("click", () => {
-    iframeWrapper.style.display = "none";
-    bubbleText.style.display = "block";
-  });
-  iframeWrapper.appendChild(closeBtn);
+  // Close is handled by the widget's internal close button via postMessage
 
   // Chat text label
   const bubbleText = document.createElement("div");
@@ -76,15 +57,17 @@
   bubbleText.style.bottom = "60px";
   bubbleText.style.right = "140px";
   bubbleText.style.background = "#8ECAE6";
-  bubbleText.style.background = "rgba(255, 255, 255, 0.6)";
+  bubbleText.style.background = "rgba(142, 202, 230, 0.25)";
   bubbleText.style.backgroundOpacity = "0.1";
   bubbleText.style.padding = "8px 12px";
   bubbleText.style.borderRadius = "12px";
   bubbleText.style.boxShadow = "0 4px 10px rgba(0,0,0,0.12)";
-  bubbleText.style.border = "3px solid #eee";
+  bubbleText.style.border = "2px solid #8ECAE6";
   bubbleText.style.zIndex = "999997";
   bubbleText.style.fontSize = "16px";
     bubbleText.style.fontWeight = "600";
+  // Ensure bubbleText color is readable on light background
+  // For very dark colours, use as-is; but ensure minimum contrast
   bubbleText.style.color = customColour;
 
   // Floating chat bubble

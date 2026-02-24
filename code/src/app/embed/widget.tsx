@@ -58,7 +58,7 @@ export default function Chat() {
 
       {/* Messages Area */}
       <div ref={chatBoxText} className={styles.messagesContainer}>
-        {messages.length === 0 && (
+        {messages.length === 0 && !isBotProcessing && (
           <div className={styles.emptyState}>
             <div className={styles.emptyStateIcon}>👋</div>
             <h2 className={styles.emptyStateTitle}>Welcome!</h2>

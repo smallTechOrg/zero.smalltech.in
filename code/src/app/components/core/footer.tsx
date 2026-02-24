@@ -9,11 +9,11 @@ export default function Footer({ className = "" }) {
             href="mailto:contact@smalltech.in"
             className="flex items-center hover:underline space-x-2"
           >
-            <span className="text-expresso">✉ mail</span>
+            <span className="text-navy">✉ mail</span>
           </Link>
           
           <div className="flex items-center space-x-2">
-            <span className="text-expresso">© {currentYear} madhyamakist pvt ltd</span>
+            <span className="text-navy">© {currentYear} madhyamakist pvt ltd</span>
           </div>
         </div>
 

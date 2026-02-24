@@ -211,9 +211,9 @@ function HomePage({ openModal }: { openModal: () => void }) {
       div.className =
         "crm-item grid grid-cols-3 gap-3 p-3 rounded-xl border border-transparent opacity-0 translate-y-4 transition-all duration-500";
       div.innerHTML = `
-        <span class="text-[10px] font-bold text-slate-900">${contact.name}</span>
-        <span class="text-[10px] text-slate-600 truncate">${contact.email}</span>
-        <span class="text-[9px] px-2 py-1 bg-green-100 text-green-700 font-black rounded-full text-center">NEW ${contact.source}</span>
+        <span class="text-[10px] font-bold text-navy">${contact.name}</span>
+        <span class="text-[10px] text-navy/70 truncate">${contact.email}</span>
+        <span class="text-[9px] px-2 py-1 bg-sky/40 text-pacific font-black rounded-full text-center">NEW ${contact.source}</span>
       `;
 
       if (container.children.length >= 4) {
@@ -247,34 +247,34 @@ function HomePage({ openModal }: { openModal: () => void }) {
       {/* Hero */}
       <section className="relative pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
+          <div className="absolute top-20 left-10 w-96 h-96 bg-sky rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-sky rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
             {/* Left */}
             <div className="w-full lg:w-1/2 text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-xs font-bold mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky/30 border border-sky/50 text-pacific text-xs font-bold mb-8">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pacific opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-pacific" />
                 </span>
                 NEW: SMART AGENTS V2.0
               </div>
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-black mb-8 leading-[0.95]">
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-navy mb-8 leading-[0.95]">
                 Embeddable <br />
                 Smart Agent
                 <br />
-                <span className="text-blue-600">For Your Site</span>
+                <span className="text-pacific">For Your Site</span>
               </h1>
-              <p className="text-xl text-slate-500 mb-10 max-w-xl leading-relaxed font-medium">
+              <p className="text-xl text-navy/60 mb-10 max-w-xl leading-relaxed font-medium">
                 Bring life into your static website by embedding our smart AI
                 agent.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md">
                 <button
                   onClick={openModal}
-                  className="flex-1 px-6 py-3.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-blue-500/20 group transform hover:-translate-y-0.5"
+                  className="flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
                 >
                   <Icon
                     icon="solar:bolt-bold"
@@ -288,46 +288,46 @@ function HomePage({ openModal }: { openModal: () => void }) {
 
             {/* Right — chat mockup */}
             <div className="w-full lg:w-1/2 relative">
-              <div className="relative bg-white border border-slate-100 rounded-[3rem] p-6 shadow-2xl animate-float">
-                <div className="bg-slate-50 rounded-3xl overflow-hidden border border-slate-200 h-[450px] flex flex-col">
-                  <div className="bg-white p-4 border-b border-slate-200 flex items-center justify-between">
+              <div className="relative bg-white border border-sky/30 rounded-[3rem] p-6 shadow-2xl animate-float">
+                <div className="bg-sky/20 rounded-3xl overflow-hidden border border-sky/50 h-[450px] flex flex-col">
+                  <div className="bg-white p-4 border-b border-sky/50 flex items-center justify-between">
                     <div className="flex gap-0.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
-                      <div className="w-2.5 h-2.5 rounded-full bg-slate-200" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-sky/50" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-sky/50" />
+                      <div className="w-2.5 h-2.5 rounded-full bg-sky/50" />
                     </div>
-                    <div className="px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-400">
+                    <div className="px-3 py-1 bg-sky/40 rounded-full text-[10px] font-bold text-navy/40">
                       zer0-platform.ai
                     </div>
                     <div className="w-4" />
                   </div>
                   <div className="flex-grow p-6 flex flex-col gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-2xl bg-blue-600 shadow-lg shadow-blue-500/20" />
+                      <div className="w-10 h-10 rounded-2xl bg-pacific shadow-lg shadow-pacific/20" />
                       <div className="space-y-2 flex-grow">
-                        <div className="h-2.5 bg-slate-200 rounded-full w-1/2" />
-                        <div className="h-2.5 bg-slate-200 rounded-full w-1/3" />
+                        <div className="h-2.5 bg-sky/50 rounded-full w-1/2" />
+                        <div className="h-2.5 bg-sky/50 rounded-full w-1/3" />
                       </div>
                     </div>
-                    <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-200/50 flex-grow relative">
+                    <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-sky/30 flex-grow relative">
                       <div className="flex flex-col gap-4">
                         <div className="flex justify-end">
-                          <div className="bg-blue-600 text-white text-[11px] font-medium p-3 rounded-2xl rounded-tr-none max-w-[80%]">
+                          <div className="bg-pacific text-white text-[11px] font-medium p-3 rounded-2xl rounded-tr-none max-w-[80%]">
                             &quot;How do I setup the AI agent on my Shopify
                             store?&quot;
                           </div>
                         </div>
                         <div className="flex justify-start">
-                          <div className="bg-slate-100 text-slate-700 text-[11px] font-medium p-3 rounded-2xl rounded-tl-none max-w-[80%]">
+                          <div className="bg-sky/40 text-navy/80 text-[11px] font-medium p-3 rounded-2xl rounded-tl-none max-w-[80%]">
                             &quot;Just copy the 1-line script into your Shopify
                             theme settings. Would you like me to send you the
                             guide?&quot;
                           </div>
                         </div>
                       </div>
-                      <div className="absolute bottom-6 left-6 right-6 flex items-center gap-2 p-3 bg-slate-50 border border-slate-200 rounded-full">
-                        <div className="w-3 h-3 rounded-full bg-blue-500 animate-pulse" />
-                        <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
+                      <div className="absolute bottom-6 left-6 right-6 flex items-center gap-2 p-3 bg-sky/20 border border-sky/50 rounded-full">
+                        <div className="w-3 h-3 rounded-full bg-pacific animate-pulse" />
+                        <div className="text-[10px] text-navy/40 font-bold uppercase tracking-widest">
                           Bot is typing...
                         </div>
                       </div>
@@ -335,16 +335,16 @@ function HomePage({ openModal }: { openModal: () => void }) {
                   </div>
                 </div>
                 {/* Floating metric */}
-                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-2xl border border-slate-100 animate-float-delayed hidden md:block">
+                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-2xl border border-sky/30 animate-float-delayed hidden md:block">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-600">
+                    <div className="w-12 h-12 bg-sky/40 rounded-2xl flex items-center justify-center text-pacific">
                       <Icon icon="solar:cup-bold" width={24} />
                     </div>
                     <div>
-                      <div className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                      <div className="text-xs font-black text-navy/40 uppercase tracking-widest">
                         Leads Captured
                       </div>
-                      <div className="text-2xl font-black text-slate-900">
+                      <div className="text-2xl font-black text-navy">
                         +1,420
                       </div>
                     </div>
@@ -360,10 +360,10 @@ function HomePage({ openModal }: { openModal: () => void }) {
       <section className="pb-32 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-black text-navy mb-4 tracking-tight">
               How it works?
             </h2>
-            <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">
+            <p className="text-lg text-navy/60 font-medium max-w-2xl mx-auto">
               Transform your website from a static page into a dynamic
               conversation engine in minutes.
             </p>
@@ -389,15 +389,15 @@ function HomePage({ openModal }: { openModal: () => void }) {
             ].map((f) => (
               <div
                 key={f.title}
-                className="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-white hover:shadow-2xl hover:shadow-blue-500/5 transition-all group"
+                className="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-sky/20 border border-sky/30 hover:border-sky hover:bg-white hover:shadow-2xl hover:shadow-pacific/5 transition-all group"
               >
-                <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                <div className="w-14 h-14 bg-sky rounded-2xl flex items-center justify-center text-pacific mb-6 group-hover:bg-pacific group-hover:text-white transition-colors duration-300">
                   <Icon icon={f.icon} width={30} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
+                <h3 className="text-xl font-bold text-navy mb-3">
                   {f.title}
                 </h3>
-                <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                <p className="text-sm text-navy/60 leading-relaxed font-medium">
                   {f.text}
                 </p>
               </div>
@@ -407,7 +407,7 @@ function HomePage({ openModal }: { openModal: () => void }) {
       </section>
 
       {/* Automation CTA with live animation */}
-      <section className="py-24 bg-blue-600 text-white relative overflow-hidden">
+      <section className="py-24 bg-pacific text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="w-full lg:w-5/12">
@@ -415,11 +415,11 @@ function HomePage({ openModal }: { openModal: () => void }) {
                 Automation that <br />
                 actually works.
               </h2>
-              <ul className="space-y-6 text-blue-50 font-semibold text-lg">
+              <ul className="space-y-6 text-white font-semibold text-lg">
                 <li className="flex items-center gap-3">
                   <Icon
                     icon="solar:check-circle-bold"
-                    className="text-blue-300"
+                    className="text-sky"
                     width={24}
                   />
                   Easy to Embed
@@ -427,7 +427,7 @@ function HomePage({ openModal }: { openModal: () => void }) {
                 <li className="flex items-center gap-3">
                   <Icon
                     icon="solar:check-circle-bold"
-                    className="text-blue-300"
+                    className="text-sky"
                     width={24}
                   />
                   1000 Free Conversations
@@ -435,7 +435,7 @@ function HomePage({ openModal }: { openModal: () => void }) {
                 <li className="flex items-center gap-3">
                   <Icon
                     icon="solar:check-circle-bold"
-                    className="text-blue-300"
+                    className="text-sky"
                     width={24}
                   />
                   Built-in CRM
@@ -446,14 +446,14 @@ function HomePage({ openModal }: { openModal: () => void }) {
               <div className="relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-[3rem] p-8 lg:p-12 shadow-2xl overflow-visible aspect-[4/3] flex items-center justify-center">
                 <div className="w-full h-full grid grid-cols-2 gap-8 items-center relative">
                   {/* Typing card */}
-                  <div className="bg-white rounded-2xl shadow-2xl p-4 h-64 flex flex-col border border-slate-100 transform -rotate-1 z-10">
-                    <div className="bg-blue-600 rounded-xl p-4 w-11/12 ml-auto text-[11px] text-white font-mono leading-relaxed shadow-lg min-h-[60px]">
+                  <div className="bg-white rounded-2xl shadow-2xl p-4 h-64 flex flex-col border border-sky/30 transform -rotate-1 z-10">
+                    <div className="bg-pacific rounded-xl p-4 w-11/12 ml-auto text-[11px] text-white font-mono leading-relaxed shadow-lg min-h-[60px]">
                       <span ref={typingRef} />
                       <span className="w-0.5 h-3 bg-white cursor-blink inline-block align-middle ml-1" />
                     </div>
                   </div>
                   {/* CRM card */}
-                  <div className="bg-white rounded-2xl shadow-2xl p-6 h-64 border border-slate-100 transform rotate-1 overflow-hidden z-10 flex flex-col">
+                  <div className="bg-white rounded-2xl shadow-2xl p-6 h-64 border border-sky/30 transform rotate-1 overflow-hidden z-10 flex flex-col">
                     <div ref={crmRef} className="space-y-2" />
                   </div>
                 </div>
@@ -476,12 +476,12 @@ function PricingPage({ openModal }: { openModal: () => void }) {
   return (
     <section className="pt-40 pb-20 lg:pt-56 lg:pb-32 text-center relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tight">
+        <h2 className="text-5xl md:text-6xl font-black text-navy mb-6 tracking-tight">
           Flexible plans for every scale.
         </h2>
         <div className="flex items-center justify-center gap-4 mb-16">
           <span
-            className={`text-sm font-bold transition-colors ${yearly ? "text-slate-400" : "text-slate-900"}`}
+            className={`text-sm font-bold transition-colors ${yearly ? "text-navy/40" : "text-navy"}`}
           >
             Monthly Billing
           </span>
@@ -492,14 +492,14 @@ function PricingPage({ openModal }: { openModal: () => void }) {
               checked={yearly}
               onChange={(e) => setYearly(e.target.checked)}
             />
-            <div className="w-14 h-8 bg-slate-200 rounded-full peer-checked:bg-blue-600 transition-colors" />
+            <div className="w-14 h-8 bg-sky/50 rounded-full peer-checked:bg-pacific transition-colors" />
             <div className="toggle-dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow-md" />
           </label>
           <span
-            className={`text-sm font-bold transition-colors flex items-center gap-2 ${yearly ? "text-slate-900" : "text-slate-400"}`}
+            className={`text-sm font-bold transition-colors flex items-center gap-2 ${yearly ? "text-navy" : "text-navy/40"}`}
           >
             Yearly Billing
-            <span className="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-black">
+            <span className="bg-sky/40 text-pacific text-[10px] px-2 py-0.5 rounded-full font-black">
               SAVE 25%
             </span>
           </span>
@@ -507,18 +507,18 @@ function PricingPage({ openModal }: { openModal: () => void }) {
 
         <div className="grid md:grid-cols-3 gap-8">
           {/* Free */}
-          <div className="p-10 bg-white rounded-[2.5rem] border border-slate-200 text-left hover:border-blue-200 hover:shadow-xl transition-all flex flex-col">
+          <div className="p-10 bg-white rounded-[2.5rem] border border-sky/50 text-left hover:border-sky hover:shadow-xl transition-all flex flex-col">
             <div className="mb-8">
-              <h3 className="text-lg font-bold text-slate-400 uppercase tracking-widest mb-4">
+              <h3 className="text-lg font-bold text-navy/40 uppercase tracking-widest mb-4">
                 Free Plan
               </h3>
-              <div className="text-5xl font-black text-slate-900">Free</div>
+              <div className="text-5xl font-black text-navy">Free</div>
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
-              <li className="flex items-center gap-3 text-sm font-bold text-slate-700">
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
                 <Icon
                   icon="solar:check-circle-bold"
-                  className="text-blue-600"
+                  className="text-pacific"
                   width={20}
                 />
                 500 Conversations/mo
@@ -526,28 +526,28 @@ function PricingPage({ openModal }: { openModal: () => void }) {
             </ul>
             <button
               onClick={openModal}
-              className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all"
+              className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Start Free
             </button>
           </div>
 
           {/* Basic */}
-          <div className="p-10 bg-white rounded-[2.5rem] border border-slate-200 text-left hover:border-blue-200 hover:shadow-xl transition-all flex flex-col">
+          <div className="p-10 bg-white rounded-[2.5rem] border border-sky/50 text-left hover:border-sky hover:shadow-xl transition-all flex flex-col">
             <div className="mb-8">
-              <h3 className="text-lg font-bold text-slate-400 uppercase tracking-widest mb-4">
+              <h3 className="text-lg font-bold text-navy/40 uppercase tracking-widest mb-4">
                 Basic Plan
               </h3>
-              <div className="text-5xl font-black text-slate-900">
+              <div className="text-5xl font-black text-navy">
                 ${yearly ? "3" : "4"}
-                <span className="text-lg font-medium text-slate-400">/mo</span>
+                <span className="text-lg font-medium text-navy/40">/mo</span>
               </div>
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
-              <li className="flex items-center gap-3 text-sm font-bold text-slate-700">
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
                 <Icon
                   icon="solar:check-circle-bold"
-                  className="text-blue-600"
+                  className="text-pacific"
                   width={20}
                 />
                 2000 Conversations/mo
@@ -555,16 +555,16 @@ function PricingPage({ openModal }: { openModal: () => void }) {
             </ul>
             <button
               onClick={openModal}
-              className="w-full py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all"
+              className="w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Select Basic
             </button>
           </div>
 
           {/* Pro */}
-          <div className="p-10 bg-blue-600 rounded-[2.5rem] text-white text-left shadow-2xl shadow-blue-600/30 transform md:scale-105 flex flex-col relative overflow-hidden">
+          <div className="p-10 bg-pacific rounded-[2.5rem] text-white text-left shadow-2xl shadow-pacific/30 transform md:scale-105 flex flex-col relative overflow-hidden">
             <div className="mb-8">
-              <h3 className="text-lg font-bold text-blue-100 uppercase tracking-widest mb-4">
+              <h3 className="text-lg font-bold text-sky uppercase tracking-widest mb-4">
                 Pro Plan
               </h3>
               <div className="text-5xl font-black">
@@ -580,7 +580,7 @@ function PricingPage({ openModal }: { openModal: () => void }) {
             </ul>
             <button
               onClick={openModal}
-              className="w-full py-4 bg-white text-blue-600 rounded-2xl font-bold hover:bg-blue-50 transition-all shadow-xl"
+              className="w-full py-4 bg-white text-pacific rounded-2xl font-bold hover:bg-sky/30 transition-all shadow-xl"
             >
               Get Pro Access
             </button>
@@ -602,37 +602,37 @@ function SalesPage({ openModal }: { openModal: () => void }) {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
-              <span className="text-blue-600 font-bold tracking-widest uppercase text-xs mb-4 block">
+              <span className="text-pacific font-bold tracking-widest uppercase text-xs mb-4 block">
                 Sales Intelligence &amp; Revenue Acceleration
               </span>
-              <h1 className="text-6xl font-black text-slate-900 mb-6 leading-tight">
+              <h1 className="text-6xl font-black text-navy mb-6 leading-tight">
                 AI Lead Generation: Close deals while you sleep.
               </h1>
-              <p className="text-xl text-slate-500 mb-10 leading-relaxed font-medium">
+              <p className="text-xl text-navy/60 mb-10 leading-relaxed font-medium">
                 ZER0 identifies high-intent visitors, answers complex pricing
                 questions, and books meetings automatically. It&apos;s the AI
                 sales assistant that never takes a day off.
               </p>
               <button
                 onClick={openModal}
-                className="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all"
+                className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Optimize Sales Funnel
               </button>
             </div>
             <div className="lg:w-1/2 relative">
               <div className="subpage-visual-blob w-full aspect-square flex items-center justify-center p-12">
-                <div className="bg-white rounded-[2rem] shadow-2xl p-8 w-full border border-blue-50">
+                <div className="bg-white rounded-[2rem] shadow-2xl p-8 w-full border border-sky/30">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                    <div className="w-3 h-3 rounded-full bg-tangerine" />
+                    <div className="w-3 h-3 rounded-full bg-amber" />
+                    <div className="w-3 h-3 rounded-full bg-pacific" />
                   </div>
                   <div className="space-y-4">
-                    <div className="h-4 bg-slate-100 rounded-full w-3/4" />
-                    <div className="h-4 bg-slate-100 rounded-full w-1/2" />
-                    <div className="h-20 bg-blue-50 rounded-2xl border-2 border-dashed border-blue-200 flex items-center justify-center">
-                      <span className="text-blue-600 font-bold text-sm">
+                    <div className="h-4 bg-sky/40 rounded-full w-3/4" />
+                    <div className="h-4 bg-sky/40 rounded-full w-1/2" />
+                    <div className="h-20 bg-sky/30 rounded-2xl border-2 border-dashed border-sky flex items-center justify-center">
+                      <span className="text-pacific font-bold text-sm">
                         Automated Lead Qualified: $12k Opportunity
                       </span>
                     </div>
@@ -644,13 +644,13 @@ function SalesPage({ openModal }: { openModal: () => void }) {
         </div>
       </section>
 
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-sky/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900">
+            <h2 className="text-3xl font-bold text-navy">
               Maximize Conversational Commerce ROI
             </h2>
-            <p className="text-slate-500 mt-4 max-w-2xl mx-auto">
+            <p className="text-navy/60 mt-4 max-w-2xl mx-auto">
               Scale your sales operation with intelligent automation that works
               across your entire customer lifecycle.
             </p>
@@ -675,17 +675,17 @@ function SalesPage({ openModal }: { openModal: () => void }) {
             ].map((f) => (
               <div
                 key={f.title}
-                className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100"
+                className="bg-white p-8 rounded-3xl shadow-sm border border-sky/30"
               >
                 <Icon
                   icon={f.icon}
-                  className="text-blue-600 mb-4"
+                  className="text-pacific mb-4"
                   width={32}
                 />
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <h3 className="text-xl font-bold text-navy mb-2">
                   {f.title}
                 </h3>
-                <p className="text-slate-500 text-sm">{f.text}</p>
+                <p className="text-navy/60 text-sm">{f.text}</p>
               </div>
             ))}
           </div>
@@ -706,13 +706,13 @@ function SupportPage({ openModal }: { openModal: () => void }) {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row-reverse items-center gap-16">
             <div className="lg:w-1/2 text-left">
-              <span className="text-blue-600 font-bold tracking-widest uppercase text-xs mb-4 block">
+              <span className="text-pacific font-bold tracking-widest uppercase text-xs mb-4 block">
                 CX Automation &amp; Support Excellence
               </span>
-              <h1 className="text-6xl font-black text-slate-900 mb-6 leading-tight">
+              <h1 className="text-6xl font-black text-navy mb-6 leading-tight">
                 Customer Support Automation: Instant answers, 24/7.
               </h1>
-              <p className="text-xl text-slate-500 mb-10 leading-relaxed font-medium">
+              <p className="text-xl text-navy/60 mb-10 leading-relaxed font-medium">
                 Reduce resolution times from hours to milliseconds. ZER0&apos;s
                 intelligent support agents connect to your documentation to
                 resolve complex product queries and technical issues without
@@ -720,19 +720,19 @@ function SupportPage({ openModal }: { openModal: () => void }) {
               </p>
               <button
                 onClick={openModal}
-                className="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all"
+                className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Scale My Support
               </button>
             </div>
             <div className="lg:w-1/2">
-              <div className="bg-indigo-600 rounded-[3rem] p-12 relative overflow-hidden group">
+              <div className="bg-pacific rounded-[3rem] p-12 relative overflow-hidden group">
                 <div className="relative z-10">
                   <div className="flex gap-4 mb-6">
                     <div className="w-12 h-12 rounded-full bg-white/20" />
                     <div className="flex-1 space-y-2">
                       <div className="h-3 bg-white/40 rounded-full w-1/3" />
-                      <div className="h-24 bg-white rounded-2xl p-4 text-xs font-medium text-slate-700 leading-relaxed shadow-lg">
+                      <div className="h-24 bg-white rounded-2xl p-4 text-xs font-medium text-navy/80 leading-relaxed shadow-lg">
                         &quot;I found the technical documentation for your SSO
                         setup. Here is the step-by-step guide to resolving the
                         403 error.&quot;
@@ -747,7 +747,7 @@ function SupportPage({ openModal }: { openModal: () => void }) {
         </div>
       </section>
 
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-sky/20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-6">
             {[
@@ -774,13 +774,13 @@ function SupportPage({ openModal }: { openModal: () => void }) {
             ].map((s) => (
               <div
                 key={s.label}
-                className="p-6 bg-white border border-slate-100 rounded-3xl hover:shadow-md transition-all"
+                className="p-6 bg-white border border-sky/30 rounded-3xl hover:shadow-md transition-all"
               >
-                <div className="text-blue-600 font-black text-3xl mb-2">
+                <div className="text-pacific font-black text-3xl mb-2">
                   {s.stat}
                 </div>
-                <div className="text-slate-900 font-bold mb-1">{s.label}</div>
-                <p className="text-slate-500 text-xs">{s.text}</p>
+                <div className="text-navy font-bold mb-1">{s.label}</div>
+                <p className="text-navy/60 text-xs">{s.text}</p>
               </div>
             ))}
           </div>
@@ -803,44 +803,44 @@ function IndustryPage({
 }) {
   const config = INDUSTRY_CONFIGS[industry] ?? INDUSTRY_CONFIGS["Small Business"];
   return (
-    <section className="pt-40 pb-20 bg-slate-50">
+    <section className="pt-40 pb-20 bg-sky/20">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16 mb-20">
           <div className="lg:w-3/5">
-            <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-blue-500/20">
+            <div className="w-16 h-16 bg-pacific text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-pacific/20">
               <Icon icon={config.icon} width={36} />
             </div>
-            <h1 className="text-6xl font-black text-slate-900 mb-6 tracking-tight">
+            <h1 className="text-6xl font-black text-navy mb-6 tracking-tight">
               {config.seoTitle}
             </h1>
-            <p className="text-xl text-slate-500 font-medium leading-relaxed mb-8">
+            <p className="text-xl text-navy/60 font-medium leading-relaxed mb-8">
               {config.seoText}
             </p>
             <button
               onClick={openModal}
-              className="px-8 py-4 bg-blue-600 text-white rounded-full font-bold shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-all"
+              className="px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
             >
               Get {industry} Case Study
             </button>
           </div>
           <div className="lg:w-2/5">
-            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 animate-float">
-              <h3 className="text-xl font-bold text-slate-900 mb-6">
+            <div className="bg-white p-10 rounded-[3rem] shadow-xl border border-sky/30 animate-float">
+              <h3 className="text-xl font-bold text-navy mb-6">
                 Industry-Specific AI
               </h3>
-              <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 mb-4">
-                <h4 className="font-bold text-blue-700 mb-2">
+              <div className="bg-sky/30 p-6 rounded-2xl border border-sky/50 mb-4">
+                <h4 className="font-bold text-navy mb-2">
                   {config.feature}
                 </h4>
-                <p className="text-blue-900/60 text-sm leading-relaxed">
+                <p className="text-navy/60 text-sm leading-relaxed">
                   {config.desc}
                 </p>
               </div>
-              <div className="space-y-4 pt-4 border-t border-slate-100">
-                <div className="flex items-center gap-3 text-slate-600 text-xs font-bold uppercase tracking-wider">
+              <div className="space-y-4 pt-4 border-t border-sky/30">
+                <div className="flex items-center gap-3 text-navy/70 text-xs font-bold uppercase tracking-wider">
                   <Icon
                     icon="solar:check-circle-bold"
-                    className="text-green-500"
+                    className="text-pacific"
                     width={16}
                   />
                   GDPR &amp; SOC2 Ready
@@ -862,7 +862,7 @@ function AboutPage() {
   return (
     <section className="pt-40 pb-20 lg:pt-56 lg:pb-40">
       <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="text-5xl font-black text-slate-900 mb-8 tracking-tight">
+        <h2 className="text-5xl font-black text-navy mb-8 tracking-tight">
           Humanizing Digital Interactions through AI.
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -874,12 +874,12 @@ function AboutPage() {
           ].map((s) => (
             <div
               key={s.l}
-              className="p-8 bg-slate-50 rounded-3xl border border-slate-100 hover:bg-white hover:shadow-xl transition-all group"
+              className="p-8 bg-sky/20 rounded-3xl border border-sky/30 hover:bg-white hover:shadow-xl transition-all group"
             >
-              <div className="text-4xl font-black text-blue-600 mb-2 group-hover:scale-110 transition-transform">
+              <div className="text-4xl font-black text-pacific mb-2 group-hover:scale-110 transition-transform">
                 {s.v}
               </div>
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <div className="text-xs font-bold text-navy/40 uppercase tracking-widest">
                 {s.l}
               </div>
             </div>
@@ -912,27 +912,35 @@ export default function Home() {
   );
 
   return (
-    <div className="bg-white text-slate-500 antialiased selection:bg-blue-100 selection:text-blue-700 overflow-x-hidden">
+    <div className="bg-white text-navy/60 antialiased selection:bg-sky selection:text-navy overflow-x-hidden">
       {/* Iconify web component */}
       <Script
         src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"
         strategy="beforeInteractive"
       />
 
+      {/* Embedded chat widget */}
+      <Script
+        src="/embed.js"
+        data-chat-url="/embed"
+        data-colour="#219EBC"
+        strategy="lazyOnload"
+      />
+
       {/* Lead Form Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-navy/60 backdrop-blur-sm">
           <div className="bg-white w-full max-w-md rounded-3xl p-8 shadow-2xl relative">
             <button
               onClick={closeModal}
-              className="absolute top-6 right-6 text-slate-400 hover:text-slate-600"
+              className="absolute top-6 right-6 text-navy/40 hover:text-navy/70"
             >
               <Icon icon="solar:close-circle-linear" width={28} />
             </button>
-            <h3 className="text-2xl font-semibold text-slate-900 mb-2">
+            <h3 className="text-2xl font-semibold text-navy mb-2">
               Get Started with ZER0
             </h3>
-            <p className="text-slate-500 mb-6">
+            <p className="text-navy/60 mb-6">
               Enter your details and our team will reach out to help you set up
               your smart agent.
             </p>
@@ -956,10 +964,10 @@ export default function Home() {
               className="flex-shrink-0 flex items-center gap-2 cursor-pointer group"
               onClick={() => navigateTo("home")}
             >
-              <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-blue-600/20">
+              <div className="w-9 h-9 bg-pacific rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-pacific/20">
                 <Icon icon="solar:chat-round-dots-linear" width={22} />
               </div>
-              <span className="text-xl font-bold tracking-tighter text-slate-900">
+              <span className="text-xl font-bold tracking-tighter text-navy">
                 ZER0
               </span>
             </div>
@@ -968,7 +976,7 @@ export default function Home() {
             <div className="hidden lg:flex items-center space-x-8">
               <button
                 onClick={() => navigateTo("pricing")}
-                className={`text-sm font-semibold hover:text-blue-600 transition-colors ${page === "pricing" ? "text-blue-600" : "text-slate-600"}`}
+                className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
               >
                 Pricing
               </button>
@@ -979,7 +987,7 @@ export default function Home() {
                     "_blank"
                   )
                 }
-                className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-colors"
+                className="text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
               >
                 About
               </button>
@@ -989,14 +997,14 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-4">
               <button
                 onClick={openModal}
-                className="px-5 py-2.5 text-sm font-bold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/20 transition-all transform hover:-translate-y-0.5"
+                className="px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
                 Get Started
               </button>
             </div>
 
             {/* Mobile hamburger placeholder */}
-            <button className="lg:hidden text-slate-900">
+            <button className="lg:hidden text-navy">
               <Icon icon="solar:hamburger-menu-linear" width={28} />
             </button>
           </div>
@@ -1016,13 +1024,13 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="py-20 bg-slate-900 text-white">
+      <footer className="py-20 bg-navy text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold mb-4">Join ZER0 today.</h2>
           <div className="mb-12">
             <a
               href="mailto:zero@smalltech.in"
-              className="inline-flex items-center gap-2 text-slate-400 hover:text-blue-400 transition-colors font-medium"
+              className="inline-flex items-center gap-2 text-navy/40 hover:text-sky transition-colors font-medium"
             >
               <Icon icon="solar:letter-linear" width={20} />
               zero@smalltech.in
@@ -1032,7 +1040,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
             <button
               onClick={openModal}
-              className="px-8 py-3.5 bg-white text-slate-900 rounded-full font-bold hover:bg-blue-50 transition-all text-sm"
+              className="px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
               Get Started
             </button>
@@ -1052,12 +1060,12 @@ export default function Home() {
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => navigateTo("home")}
             >
-              <div className="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white">
+              <div className="w-8 h-8 bg-pacific rounded flex items-center justify-center text-white">
                 <Icon icon="solar:chat-round-dots-linear" width={18} />
               </div>
               <span className="text-xl font-bold tracking-tighter">ZER0</span>
             </div>
-            <p className="text-slate-500 text-sm font-medium">
+            <p className="text-navy/60 text-sm font-medium">
               &copy; 2026 ZER0. Built for the modern web.
             </p>
           </div>

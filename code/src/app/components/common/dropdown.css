@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .btnDropdown{
-   @apply w-full pl-2 py-2 border rounded-lg bg-khaki text-start
+   @apply w-full pl-2 py-2 border rounded-lg bg-sky text-start
     flex justify-between;
 }
 
@@ -11,7 +11,7 @@
 }
 
 .txt{
-   @apply bg-khaki w-full border rounded-lg mt-1 max-h-60 overflow-y-auto
+   @apply bg-sky w-full border rounded-lg mt-1 max-h-60 overflow-y-auto
 }
 
 .listItem{

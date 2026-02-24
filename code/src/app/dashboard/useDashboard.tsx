@@ -34,9 +34,9 @@ export function useDashboard(initialRows: LeadRowData[]) {
 
   const columns = useMemo<ColumnDef<LeadRowData>[]>(() => {
   const statusColors: Record<LeadStatus, string> = {
-    OPEN: "text-blue-700 font-semibold",
-    CLOSED: "text-red-600 font-semibold",
-    QUALIFYING: "text-green-800 font-semibold",
+    OPEN: "text-pacific font-semibold",
+    CLOSED: "text-tangerine font-semibold",
+    QUALIFYING: "text-amber font-semibold",
   };
   return [
     {
@@ -48,7 +48,7 @@ export function useDashboard(initialRows: LeadRowData[]) {
         return (
           <button
             type="button"
-            className="hover:text-blue-300"
+            className="hover:text-sky"
             onClick={() => {
               setExpanded((e) => ({ ...e, [r.session_id]: !isOpen }));
               if (!isOpen && !histories[r.session_id] && !historyLoading[r.session_id]) {
@@ -104,9 +104,9 @@ export function useDashboard(initialRows: LeadRowData[]) {
   }, [expanded, histories, historyLoading, onChangeStatus, setExpanded, loadHistory]);
 
   const statusColors: Record<LeadStatus, string> = {
-    OPEN: "text-blue-700 font-semibold",
-    CLOSED: "text-red-600 font-semibold",
-    QUALIFYING: "text-green-800 font-semibold",
+    OPEN: "text-pacific font-semibold",
+    CLOSED: "text-tangerine font-semibold",
+    QUALIFYING: "text-amber font-semibold",
   };
 
   return {

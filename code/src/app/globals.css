@@ -4,22 +4,30 @@
 @import './components/common/dropdown.css';
 
 @theme inline {
-  --color-cream: #c4bbaf;
-  --color-cinereous: #A5978B;
-  --color-brown: #5c4742;
-  --color-liver: #5C4742;
-  --color-redwood: #8D5B4C;
-  --color-caput: #5A2A27;
-  --color-licorice: #1D0E0C;
-  --color-khaki:#A5978B;
-  --color-rose:#B8887A;
-  --color-almond-silk: #E7C9C6;
-  --color-seashell-pink: #F2E3E1;
-  --color-bg-gradient:linear-gradient(to bottom, var(--color-almond-silk), var(--color-seashell-pink));
-  --color-deep-mocha:#473733;
-  --color-liver-brown:#5C4742;
-  --color-mauve-bark:#6A534D;
-  --color-expresso: #5A2A27;
+  /* Primary palette: 5 colors */
+  --color-sky: #8ECAE6;
+  --color-pacific: #219EBC;
+  --color-navy: #023047;
+  --color-amber: #FFB703;
+  --color-tangerine: #FB8500;
+
+  /* Legacy aliases mapped to new palette */
+  --color-cream: #8ECAE6;
+  --color-cinereous: #8ECAE6;
+  --color-brown: #023047;
+  --color-liver: #023047;
+  --color-redwood: #219EBC;
+  --color-caput: #FB8500;
+  --color-licorice: #023047;
+  --color-khaki: #8ECAE6;
+  --color-rose: #FFB703;
+  --color-almond-silk: #8ECAE6;
+  --color-seashell-pink: #8ECAE6;
+  --color-bg-gradient: linear-gradient(to bottom, #8ECAE6, #ffffff);
+  --color-deep-mocha: #023047;
+  --color-liver-brown: #023047;
+  --color-mauve-bark: #219EBC;
+  --color-expresso: #023047;
 }
 
 body {
@@ -53,7 +61,7 @@ html, body {
 }
 @keyframes highlight-row {
   0% { background: transparent; }
-  10% { background: rgba(59, 130, 246, 0.1); }
+  10% { background: rgba(142, 202, 230, 0.15); }
   100% { background: transparent; }
 }
 
@@ -74,7 +82,7 @@ html, body {
 }
 
 .subpage-visual-blob {
-  background: linear-gradient(135deg, #3b82f6 0%, #818cf8 100%);
+  background: linear-gradient(135deg, #219EBC 0%, #8ECAE6 100%);
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
 }
 
