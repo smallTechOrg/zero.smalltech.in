@@ -29,7 +29,7 @@
   iframeWrapper.style.bottom = "20px";
   iframeWrapper.style.right = "20px";
   iframeWrapper.style.marginLeft = "auto";
-  iframeWrapper.style.width = "300px";
+  iframeWrapper.style.width = "350px";
   iframeWrapper.style.height = "520px";
   iframeWrapper.style.borderRadius = "16px";
   iframeWrapper.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)";

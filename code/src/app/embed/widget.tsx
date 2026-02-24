@@ -56,7 +56,7 @@ export default function Chat() {
           </div>
           <div className={styles.headerText}>
             <h1 className={styles.headerTitle}>Chat with us</h1>
-            <p className={styles.headerSubtitle}>We typically reply instantly</p>
+            <p className={styles.headerSubtitle}>We are here to help you</p>
           </div>
         </div>
         <button 

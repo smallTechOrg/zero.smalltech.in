@@ -194,7 +194,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
           clearInterval(typeInterval);
           setTimeout(() => {
             if (!cancelled) addCrmLead();
-          }, 800);
+          }, 400);
         }
       }, 40);
     }
@@ -245,7 +245,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-40 pb-20 lg:pt-56 lg:pb-32 overflow-hidden">
+      <section className="relative pt-40 pb-20 lg:pt-36 lg:pb-32 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
           <div className="absolute top-20 left-10 w-96 h-96 bg-sky rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-sky rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" />
@@ -259,7 +259,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pacific opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-pacific" />
                 </span>
-                NEW: SMART AGENTS V2.0
+                NEW: Custom Backend Integration Support
               </div>
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-navy mb-8 leading-[0.95]">
                 Embeddable <br />
@@ -268,12 +268,11 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                 <span className="text-pacific">For Your Site</span>
               </h1>
               <p className="text-xl text-navy/60 mb-10 max-w-xl leading-relaxed font-medium">
-                Bring life into your static website by embedding our smart AI
-                agent.
+                Tired of losing customers to boring contact forms?
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md">
                 <button
-                  onClick={() => openChatWidget("I want to get started with Zer0")}
+                  onClick={() => openChatWidget("I keep losing customers on my website.")}
                   className="cursor-pointer flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
                 >
                   <Icon
@@ -281,7 +280,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                     className="text-white"
                     width={18}
                   />
-                  Get Started
+                  Find A Better Way
                 </button>
               </div>
             </div>
@@ -297,13 +296,13 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                       <div className="w-2.5 h-2.5 rounded-full bg-sky/50" />
                     </div>
                     <div className="px-3 py-1 bg-sky/40 rounded-full text-[10px] font-bold text-navy/40">
-                      zer0-platform.ai
+                      smallbusiness.com
                     </div>
                     <div className="w-4" />
                   </div>
                   <div className="flex-grow p-6 flex flex-col gap-4">
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-2xl bg-pacific shadow-lg shadow-pacific/20" />
+                      <div className="w-10 h-10 rounded-2xl bg-navy shadow-lg shadow-navy/20" />
                       <div className="space-y-2 flex-grow">
                         <div className="h-2.5 bg-sky/50 rounded-full w-1/2" />
                         <div className="h-2.5 bg-sky/50 rounded-full w-1/3" />
@@ -313,39 +312,20 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                       <div className="flex flex-col gap-4">
                         <div className="flex justify-end">
                           <div className="bg-pacific text-white text-[11px] font-medium p-3 rounded-2xl rounded-tr-none max-w-[80%]">
-                            &quot;How do I setup the AI agent on my Shopify
-                            store?&quot;
+                            In how many days can I expect the shipment for my order?
                           </div>
                         </div>
                         <div className="flex justify-start">
                           <div className="bg-sky/40 text-navy/80 text-[11px] font-medium p-3 rounded-2xl rounded-tl-none max-w-[80%]">
-                            &quot;Just copy the 1-line script into your Shopify
-                            theme settings. Would you like me to send you the
-                            guide?&quot;
+                            You should receive your order within 5-7 business days. 
                           </div>
                         </div>
                       </div>
                       <div className="absolute bottom-6 left-6 right-6 flex items-center gap-2 p-3 bg-sky/20 border border-sky/50 rounded-full">
                         <div className="w-3 h-3 rounded-full bg-pacific animate-pulse" />
-                        <div className="text-[10px] text-navy/40 font-bold uppercase tracking-widest">
-                          Bot is typing...
+                        <div className="text-[10px] text-navy/40 font-bold tracking-widest">
+                          And what is your return policy?
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Floating metric */}
-                <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-2xl border border-sky/30 animate-float-delayed hidden md:block">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-sky/40 rounded-2xl flex items-center justify-center text-pacific">
-                      <Icon icon="solar:cup-bold" width={24} />
-                    </div>
-                    <div>
-                      <div className="text-xs font-black text-navy/40 uppercase tracking-widest">
-                        Leads Captured
-                      </div>
-                      <div className="text-2xl font-black text-navy">
-                        +1,420
                       </div>
                     </div>
                   </div>
@@ -391,7 +371,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                 key={f.title}
                 className="flex flex-col items-center text-center p-10 rounded-[2.5rem] bg-sky/20 border border-sky/30 hover:border-sky hover:bg-white hover:shadow-2xl hover:shadow-pacific/5 transition-all group"
               >
-                <div className="w-14 h-14 bg-sky rounded-2xl flex items-center justify-center text-pacific mb-6 group-hover:bg-pacific group-hover:text-white transition-colors duration-300">
+                <div className="w-14 h-14 bg-sky rounded-2xl flex items-center justify-center text-navy mb-6 group-hover:bg-pacific group-hover:text-white transition-colors duration-300">
                   <Icon icon={f.icon} width={30} />
                 </div>
                 <h3 className="text-xl font-bold text-navy mb-3">
@@ -407,7 +387,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
       </section>
 
       {/* Automation CTA with live animation */}
-      <section className="py-24 bg-pacific text-white relative overflow-hidden">
+      <section className="py-24 bg-navy text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="w-full lg:w-5/12">
@@ -521,7 +501,31 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
                   className="text-pacific"
                   width={20}
                 />
-                500 Conversations/mo
+                200 Conversations/mo
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:close-circle-bold"
+                  className="text-red-500"
+                  width={20}
+                />
+                Priority Support
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:close-circle-bold"
+                  className="text-red-500"
+                  width={20}
+                />
+                Free Customisations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:close-circle-bold"
+                  className="text-red-500"
+                  width={20}
+                />
+                Free Backend Integration
               </li>
             </ul>
             <button
@@ -550,7 +554,31 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
                   className="text-pacific"
                   width={20}
                 />
-                2000 Conversations/mo
+                1000 Conversations/mo
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:check-circle-bold"
+                  className="text-pacific"
+                  width={20}
+                />
+                Priority Support
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:check-circle-bold"
+                  className="text-pacific"
+                  width={20}
+                />
+                Free Customisations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold text-navy/80">
+                <Icon
+                  icon="solar:close-circle-bold"
+                  className="text-red-500"
+                  width={20}
+                />
+                Free Backend Integration
               </li>
             </ul>
             <button
@@ -575,7 +603,19 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm font-bold">
                 <Icon icon="solar:check-circle-bold" width={20} />
-                Unlimited Conversations/mo
+                Unlimited Conversations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold">
+                <Icon icon="solar:check-circle-bold" width={20} />
+                Priority Support
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold">
+                <Icon icon="solar:check-circle-bold" width={20} />
+                Free Customisations
+              </li>
+              <li className="flex items-center gap-3 text-sm font-bold">
+                <Icon icon="solar:check-circle-bold" width={20} />
+                Free Backend Integration
               </li>
             </ul>
             <button
@@ -720,13 +760,13 @@ function SupportPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               </p>
               <button
                 onClick={() => openChatWidget("I want to scale my customer support with Zer0")}
-                className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
+                className="cursor-pointer px-8 py-4 bg-navy text-white rounded-full font-bold shadow-lg shadow-navy/20 hover:bg-pacific transition-all"
               >
                 Scale My Support
               </button>
             </div>
             <div className="lg:w-1/2">
-              <div className="bg-pacific rounded-[3rem] p-12 relative overflow-hidden group">
+              <div className="bg-navy rounded-[3rem] p-12 relative overflow-hidden group">
                 <div className="relative z-10">
                   <div className="flex gap-4 mb-6">
                     <div className="w-12 h-12 rounded-full bg-white/20" />
@@ -776,10 +816,10 @@ function SupportPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
                 key={s.label}
                 className="p-6 bg-white border border-sky/30 rounded-3xl hover:shadow-md transition-all"
               >
-                <div className="text-pacific font-black text-3xl mb-2">
+                <div className="text-navy font-black text-3xl mb-2">
                   {s.stat}
                 </div>
-                <div className="text-navy font-bold mb-1">{s.label}</div>
+                <div className="text-pacific font-bold mb-1">{s.label}</div>
                 <p className="text-navy/60 text-xs">{s.text}</p>
               </div>
             ))}
@@ -807,7 +847,7 @@ function IndustryPage({
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center gap-16 mb-20">
           <div className="lg:w-3/5">
-            <div className="w-16 h-16 bg-pacific text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-pacific/20">
+            <div className="w-16 h-16 bg-navy text-white rounded-2xl flex items-center justify-center mb-8 shadow-xl shadow-navy/20">
               <Icon icon={config.icon} width={36} />
             </div>
             <h1 className="text-6xl font-black text-navy mb-6 tracking-tight">
@@ -876,7 +916,7 @@ function AboutPage() {
               key={s.l}
               className="p-8 bg-sky/20 rounded-3xl border border-sky/30 hover:bg-white hover:shadow-xl transition-all group"
             >
-              <div className="text-4xl font-black text-pacific mb-2 group-hover:scale-110 transition-transform">
+              <div className="text-4xl font-black text-navy mb-2 group-hover:scale-110 transition-transform">
                 {s.v}
               </div>
               <div className="text-xs font-bold text-navy/40 uppercase tracking-widest">
@@ -949,7 +989,7 @@ export default function Home() {
             <div className="hidden lg:flex items-center space-x-8">
               <button
                 onClick={() => navigateTo("pricing")}
-                className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
+                className={`cursor-pointer text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
               >
                 Pricing
               </button>
@@ -960,7 +1000,7 @@ export default function Home() {
                     "_blank"
                   )
                 }
-                className="text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
+                className="cursor-pointer text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
               >
                 About
               </button>
@@ -1022,7 +1062,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">
+              <button className="cursor-pointer px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">
                 Book a Demo
               </button>
             </a>
@@ -1033,7 +1073,7 @@ export default function Home() {
               className="flex items-center gap-2 cursor-pointer"
               onClick={() => navigateTo("home")}
             >
-              <div className="w-8 h-8 bg-pacific rounded flex items-center justify-center text-white">
+              <div className="w-8 h-8 bg-sky rounded flex items-center justify-center text-navy">
                 <Icon icon="solar:chat-round-dots-linear" width={18} />
               </div>
               <span className="text-xl font-bold tracking-tighter">ZER0</span>
