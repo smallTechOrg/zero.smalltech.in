@@ -2,6 +2,7 @@
 import Footer from "../components/core/footer";
 import { useChat } from "../hooks/useChat";
 import Image from "next/image";
+import FormattedMessage from "@/app/components/common/formattedMessage";
 export default function Chat() {
   const {
     chatBoxText,
@@ -41,7 +42,7 @@ export default function Chat() {
             {msg.sender === "You" ? (
               <p className="font-[400]">{msg.text}</p>
             ) : (
-               <p className="text-navy font-[400]">{msg.text}</p>
+              <FormattedMessage text={msg.text} className="text-navy font-[400] chat-markdown" />
             )}
           </div>
         ))}
