@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Script from "next/script";
+import SignUpPage from "./signup/signUpPage";
 
 /* ------------------------------------------------------------------ */
 /*  Static data                                                        */
@@ -142,25 +143,13 @@ const INDUSTRY_CONFIGS: Record<
 /*  Iconify helper — renders <iconify-icon> web-component              */
 /* ------------------------------------------------------------------ */
 
-function Icon({
-  icon,
-  width = 20,
-  className = "",
-}: {
-  icon: string;
-  width?: number;
-  className?: string;
-}) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Elem = "iconify-icon" as any;
-  return <Elem icon={icon} width={width} class={className} />;
-}
+import Icon from "@/components/common/icon";
 
 /* ------------------------------------------------------------------ */
 /*  Sub-pages                                                          */
 /* ------------------------------------------------------------------ */
 
-type PageId = "home" | "pricing" | "sales" | "support" | "about" | "industry";
+type PageId = "home" | "pricing" | "sales" | "support" | "about" | "industry" | "signup";
 
 /* ------------------------------------------------------------------ */
 /*  Page: Home                                                         */
@@ -649,7 +638,7 @@ function SalesPage({ openChatWidget }: { openChatWidget: (msg?: string) => void 
                 AI Lead Generation: Close deals while you sleep.
               </h1>
               <p className="text-xl text-navy/60 mb-10 leading-relaxed font-medium">
-                ZER0 identifies high-intent visitors, answers complex pricing
+                Zer0 identifies high-intent visitors, answers complex pricing
                 questions, and books meetings automatically. It&apos;s the AI
                 sales assistant that never takes a day off.
               </p>
@@ -980,8 +969,8 @@ export default function Home() {
               <div className="w-9 h-9 bg-pacific rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-pacific/20">
                 <Icon icon="solar:chat-round-dots-linear" width={22} />
               </div>
-              <span className="text-xl font-bold tracking-tighter text-navy">
-                ZER0
+              <span className="text-xl font-bold text-navy">
+                Zer0
               </span>
             </div>
 
@@ -1009,10 +998,10 @@ export default function Home() {
             {/* CTA */}
             <div className="hidden md:flex items-center space-x-4">
               <button
-                onClick={() => openChatWidget("I want to get started with Zer0")}
+                onClick={() => navigateTo("signup")}
                 className="cursor-pointer px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
-                Get Started
+                Sign Up for Free
               </button>
             </div>
 
@@ -1034,12 +1023,13 @@ export default function Home() {
           <IndustryPage industry={industry} openChatWidget={openChatWidget} />
         )}
         {page === "about" && <AboutPage />}
+        {page === "signup" && <SignUpPage />}
       </div>
 
       {/* Footer */}
       <footer className="py-20 bg-navy text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Join ZER0 today.</h2>
+          <h2 className="text-3xl font-bold mb-4">Join Zer0 today.</h2>
           <div className="mb-12">
             <a
               href="mailto:zero@smalltech.in"
@@ -1052,10 +1042,10 @@ export default function Home() {
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
             <button
-              onClick={() => openChatWidget("I want to get started with Zer0")}
+              onClick={() => navigateTo("signup")}
               className="cursor-pointer px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
-              Get Started
+              Sign Up for Free
             </button>
             <a
               href="https://calendly.com/admin-madhyamakist/30min"
@@ -1076,10 +1066,10 @@ export default function Home() {
               <div className="w-8 h-8 bg-sky rounded flex items-center justify-center text-navy">
                 <Icon icon="solar:chat-round-dots-linear" width={18} />
               </div>
-              <span className="text-xl font-bold tracking-tighter">ZER0</span>
+              <span className="text-xl font-bold tracking-tighter">Zer0</span>
             </div>
             <p className="text-navy/60 text-sm font-medium">
-              &copy; 2026 ZER0. Built for the modern web.
+              &copy; 2026 Zer0. Built for the modern web.
             </p>
           </div>
         </div>
