@@ -6,7 +6,7 @@
   height: 100vh;
   max-height: 700px;
   background: var(--chat-surface, #ffffff);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: var(--font-outfit), sans-serif;
   position: relative;
   overflow: hidden;
 }

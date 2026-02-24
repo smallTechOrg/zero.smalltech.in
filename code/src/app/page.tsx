@@ -1068,7 +1068,7 @@ export default function Home() {
               </div>
               <span className="text-xl font-bold tracking-tighter">Zer0</span>
             </div>
-            <p className="text-navy/60 text-sm font-medium">
+            <p className="text-white text-sm font-medium">
               &copy; 2026 Zer0. Built for the modern web.
             </p>
           </div>
