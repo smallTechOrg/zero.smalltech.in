@@ -969,9 +969,10 @@ export default function Home() {
               <div className="w-9 h-9 bg-pacific rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-pacific/20">
                 <Icon icon="solar:chat-round-dots-linear" width={22} />
               </div>
-              <span className="text-xl font-bold text-navy">
-                Zer0
-              </span>
+              <div className="flex flex-col leading-tight">
+                <span className="text-xl font-bold text-navy">Zer0</span>
+                <span className="text-[10px] font-medium text-navy/40 tracking-wide">AI Agents for Small Businesses</span>
+              </div>
             </div>
 
             {/* Links */}
@@ -1029,7 +1030,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="py-20 bg-navy text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Join Zer0 today.</h2>
+          <h2 className="text-3xl font-bold mb-4">Use Zer0 today.</h2>
           <div className="mb-12">
             <a
               href="mailto:zero@smalltech.in"
@@ -1068,7 +1069,7 @@ export default function Home() {
               </div>
               <span className="text-xl font-bold tracking-tighter">Zer0</span>
             </div>
-            <p className="text-navy/60 text-sm font-medium">
+            <p className="text-white text-sm font-medium">
               &copy; 2026 Zer0. Built for the modern web.
             </p>
           </div>
