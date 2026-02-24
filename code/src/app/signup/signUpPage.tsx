@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Icon from "@/components/common/icon";
+import { analytics } from "@/app/lib/analytics";
 
 type ContactMethod = "email" | "phone";
 type SignUpStep = "form" | "done";
@@ -32,6 +33,7 @@ export default function SignUpPage() {
   const [error, setError] = useState<string | null>(null);
   const [embedScript, setEmbedScript] = useState("");
   const [copied, setCopied] = useState(false);
+  const formStartTracked = useRef(false);
 
   const isFormValid =
     name.trim() !== "" &&
@@ -46,6 +48,13 @@ export default function SignUpPage() {
     if (!isFormValid || isSubmitting) return;
     setIsSubmitting(true);
     setError(null);
+
+    analytics.track('signup_form_submit', {
+      website: website.trim(),
+      contact_method: contactMethod,
+      has_custom_prompt: customPrompt.trim().length > 0,
+      colour,
+    });
 
     try {
       // 1. Register the domain
@@ -106,9 +115,21 @@ export default function SignUpPage() {
       // 4. Build the embed script tag
       const scriptTag = `<script\n  src="https://zero.smalltech.in/embed.js"\n  data-chat-url="https://zero.smalltech.in/embed"\n  data-colour="${colour}"\n  data-tagline="Chat with us"\n  defer\n><\/script>`;
       setEmbedScript(scriptTag);
+      analytics.track('signup_form_success', {
+        website: website.trim(),
+        session_id: sessionId,
+      });
+      analytics.setUserProperties({
+        signup_website: website.trim(),
+        signup_contact_method: contactMethod,
+      });
       setStep("done");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
+      analytics.track('signup_form_error', {
+        error_message: err instanceof Error ? err.message : 'Unknown error',
+        website: website.trim(),
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -122,6 +143,7 @@ export default function SignUpPage() {
       .writeText(embedScript.replace("<\\/script>", "</script>"))
       .then(() => {
         setCopied(true);
+        analytics.track('signup_embed_code_copy', { website: website.trim() });
         setTimeout(() => setCopied(false), 2500);
       });
   }
@@ -180,6 +202,7 @@ export default function SignUpPage() {
 
           <button
             onClick={() => {
+              analytics.track('signup_start_over', {});
               setStep("form");
               setEmbedScript("");
             }}
@@ -225,6 +248,12 @@ export default function SignUpPage() {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              onFocus={() => {
+                if (!formStartTracked.current) {
+                  formStartTracked.current = true;
+                  analytics.track('signup_form_start', { first_field: 'name' });
+                }
+              }}
               placeholder="Jane Doe"
               className="w-full px-5 py-3.5 rounded-xl border border-sky/50 bg-white text-navy placeholder:text-navy/30 focus:outline-none focus:ring-2 focus:ring-pacific/40 focus:border-pacific transition-all text-sm font-medium"
               required
@@ -258,7 +287,10 @@ export default function SignUpPage() {
             <div className="flex items-center gap-2 mb-4">
               <button
                 type="button"
-                onClick={() => setContactMethod("email")}
+                onClick={() => {
+                  setContactMethod("email");
+                  analytics.track('signup_contact_method_change', { method: 'email' });
+                }}
                 className={`cursor-pointer px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
                   contactMethod === "email"
                     ? "bg-pacific text-white shadow-md shadow-pacific/20"
@@ -269,7 +301,10 @@ export default function SignUpPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setContactMethod("phone")}
+                onClick={() => {
+                  setContactMethod("phone");
+                  analytics.track('signup_contact_method_change', { method: 'phone' });
+                }}
                 className={`cursor-pointer px-5 py-2.5 rounded-full text-sm font-bold transition-all ${
                   contactMethod === "phone"
                     ? "bg-pacific text-white shadow-md shadow-pacific/20"

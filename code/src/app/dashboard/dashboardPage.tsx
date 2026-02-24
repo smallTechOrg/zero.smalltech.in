@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import React from 'react';
 import {
   ColumnDef,
@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-table';
 import { useLeads, LeadStatus, LeadRowData } from './useLeads';
 import { domainHash } from './domainHash';
+import { analytics } from '@/app/lib/analytics';
 
 /* ── Constants ─────────────────────────────────────────────────── */
 
@@ -119,12 +120,42 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
 
   useEffect(() => { setCurrentPage(1); }, [search, statusFilter]);
 
+  /* ── Analytics-aware search handler ── */
+  const handleSearchChange = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
+
+  useEffect(() => {
+    if (search.trim().length > 2) {
+      const timer = setTimeout(() => {
+        analytics.track('dashboard_search', {
+          query_length: search.trim().length,
+          result_count: filteredRows.length,
+        });
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [search, filteredRows.length]);
+
+  const handleStatusFilter = useCallback((status: LeadStatus | 'ALL') => {
+    setStatusFilter(status);
+    // We schedule the analytics call so filteredRows re-computes first
+    setTimeout(() => {
+      analytics.track('dashboard_status_filter', {
+        status,
+        result_count: filteredRows.length,
+      });
+    }, 0);
+  }, [filteredRows.length]);
+
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / PAGE_SIZE));
   const startIndex = (currentPage - 1) * PAGE_SIZE;
   const pagedRows = filteredRows.slice(startIndex, startIndex + PAGE_SIZE);
 
-  const goToPage = (page: number) => {
-    setCurrentPage(Math.min(Math.max(1, page), totalPages));
+  const goToPage = (page: number, direction: 'first' | 'prev' | 'next' | 'last' | 'jump' = 'jump') => {
+    const target = Math.min(Math.max(1, page), totalPages);
+    analytics.track('dashboard_pagination', { page: target, total_pages: totalPages, direction });
+    setCurrentPage(target);
     setExpanded({});
   };
 
@@ -150,9 +181,27 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
     const url = `${window.location.origin}/dashboard/d?h=${hash}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopiedLink(domain);
+      analytics.track('dashboard_domain_link_copy', { domain });
       setTimeout(() => setCopiedLink(null), 2000);
     });
   };
+
+  /* ── Track dashboard view when stats change ── */
+  useEffect(() => {
+    if (stats.total > 0) {
+      analytics.track('dashboard_view', {
+        total_leads: stats.total,
+        open_leads: stats.open,
+        qualifying_leads: stats.qualifying,
+        closed_leads: stats.closed,
+        domain_filter: domainFilter,
+      });
+      analytics.pageView(
+        domainFilter ? `/dashboard/d?domain=${domainFilter}` : '/dashboard',
+        domainFilter ? `Dashboard — ${domainFilter}` : 'Dashboard',
+      );
+    }
+  }, [stats.total, stats.open, stats.qualifying, stats.closed, domainFilter]);
 
   /* ── Table columns ── */
   const columns = useMemo<ColumnDef<LeadRowData>[]>(() => [
@@ -250,6 +299,10 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
               }`}
               onClick={() => {
                 setExpanded((e) => ({ ...e, [r.session_id]: !isOpen }));
+                analytics.track('dashboard_chat_history_view', {
+                  session_id: r.session_id,
+                  action: isOpen ? 'collapse' : 'expand',
+                });
                 if (!isOpen && !histories[r.session_id] && !historyLoading[r.session_id]) {
                   loadHistory(r.session_id);
                 }
@@ -264,7 +317,7 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
                 <button
                   type="button"
                   className="px-2 py-0.5 rounded text-xs font-medium bg-amber text-navy hover:bg-amber/80 transition-colors"
-                  onClick={() => { onToggleActive(r.session_id, false); setDeleteConfirm(null); }}
+                  onClick={() => { analytics.track('dashboard_lead_delete', { session_id: r.session_id, domain: r.domain }); onToggleActive(r.session_id, false); setDeleteConfirm(null); }}
                 >
                   Yes
                 </button>
@@ -296,7 +349,16 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
     data: filteredRows,
     columns,
     state: { sorting },
-    onSortingChange: setSorting,
+    onSortingChange: (updater) => {
+      const next = typeof updater === 'function' ? updater(sorting) : updater;
+      setSorting(next);
+      if (next.length > 0) {
+        analytics.track('dashboard_sort', {
+          column: next[0].id,
+          direction: next[0].desc ? 'desc' : 'asc',
+        });
+      }
+    },
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
   });
@@ -368,7 +430,7 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
               type="text"
               placeholder="Search leads…"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={e => handleSearchChange(e.target.value)}
               className="w-full pl-9 pr-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-pacific/50 focus:border-pacific/50 transition-colors"
             />
           </div>
@@ -382,7 +444,7 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
                     ? 'bg-pacific text-white shadow-sm'
                     : 'text-white/50 hover:text-white/80 hover:bg-white/5'
                 }`}
-                onClick={() => setStatusFilter(tab.key)}
+                onClick={() => handleStatusFilter(tab.key)}
               >
                 {tab.label}
                 <span className={`ml-1.5 ${statusFilter === tab.key ? 'text-white/70' : 'text-white/30'}`}>
@@ -570,8 +632,8 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
               Showing {startIndex + 1}–{Math.min(startIndex + PAGE_SIZE, filteredRows.length)} of {filteredRows.length}
             </p>
             <div className="flex items-center gap-1">
-              <PaginationButton onClick={() => goToPage(1)} disabled={currentPage === 1}>«</PaginationButton>
-              <PaginationButton onClick={() => goToPage(currentPage - 1)} disabled={currentPage === 1}>‹</PaginationButton>
+              <PaginationButton onClick={() => goToPage(1, 'first')} disabled={currentPage === 1}>«</PaginationButton>
+              <PaginationButton onClick={() => goToPage(currentPage - 1, 'prev')} disabled={currentPage === 1}>‹</PaginationButton>
               {paginationRange(currentPage, totalPages).map((p, i) =>
                 p === '...' ? (
                   <span key={`e${i}`} className="px-2 text-white/30 text-xs">…</span>
@@ -585,8 +647,8 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
                   </PaginationButton>
                 )
               )}
-              <PaginationButton onClick={() => goToPage(currentPage + 1)} disabled={currentPage === totalPages}>›</PaginationButton>
-              <PaginationButton onClick={() => goToPage(totalPages)} disabled={currentPage === totalPages}>»</PaginationButton>
+              <PaginationButton onClick={() => goToPage(currentPage + 1, 'next')} disabled={currentPage === totalPages}>›</PaginationButton>
+              <PaginationButton onClick={() => goToPage(totalPages, 'last')} disabled={currentPage === totalPages}>»</PaginationButton>
             </div>
           </div>
         )}

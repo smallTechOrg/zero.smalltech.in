@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { analytics } from "@/app/lib/analytics";
 
 export interface Message {
     sender: string;
@@ -43,6 +44,8 @@ export function useChat(hostWebsite: string = "") {
     const [isBotProcessing, setisBotProcessing] = useState(true); // Start true to show typing on initial load
     const chatBoxText = useRef<HTMLDivElement>(null);
     const sessionId = useRef<string>("");
+    const messageCount = useRef(0);
+    const chatPage = hostWebsite ? 'embed' as const : 'chat' as const;
 
 
     // initialize session & load history
@@ -62,12 +65,17 @@ export function useChat(hostWebsite: string = "") {
                 const data = await res.json();
 
                 if (res.status === 200 || res.status === 201) {
-                    setMessages(
-                        (data.history as HistoryItem[]).map((h) => ({
-                            sender: h.type === "human" ? "You" : "Bot",
-                            text: h.content,
-                        }))
-                    );
+                    const msgs = (data.history as HistoryItem[]).map((h) => ({
+                        sender: h.type === "human" ? "You" : "Bot",
+                        text: h.content,
+                    }));
+                    setMessages(msgs);
+                    messageCount.current = msgs.length;
+                    analytics.track('chat_history_loaded', {
+                        message_count: msgs.length,
+                        session_id: saved,
+                        page: chatPage,
+                    });
                 } else {
                     console.error("Unexpected status from /history", res.status, data);
                 }
@@ -92,6 +100,15 @@ export function useChat(hostWebsite: string = "") {
         const userMsg = input.trim();
         if (!userMsg) return;
 
+        const isFirstMessage = messageCount.current === 0;
+        messageCount.current++;
+
+        analytics.track('chat_message_sent', {
+            message_length: userMsg.length,
+            session_id: sessionId.current,
+            is_first_message: isFirstMessage,
+            page: chatPage,
+        });
 
         // Track first chatbot message (only once per session)
         const hasTracked = localStorage.getItem(`chat_first_sent_${sessionId.current}`);
@@ -122,6 +139,7 @@ export function useChat(hostWebsite: string = "") {
         setInput("");
         // Show typing indicator
         setisBotProcessing(true);
+        const chatStart = performance.now();
         try {
             //real api call
             const controller = new AbortController();
@@ -146,8 +164,22 @@ export function useChat(hostWebsite: string = "") {
             clearTimeout(timeout);
 
             const data = await res.json();
+            const chatDuration = performance.now() - chatStart;
             // Hide typing indicator
             setisBotProcessing(false);
+
+            analytics.track('chat_message_received', {
+                response_length: (data.success ? data.response : data.error || '').length,
+                session_id: sessionId.current,
+                success: !!data.success,
+                page: chatPage,
+            });
+            analytics.track('api_latency', {
+                endpoint: '/chat',
+                duration_ms: Math.round(chatDuration),
+                status: res.status,
+                method: 'POST',
+            });
 
             setMessages((prev) => [
                 ...prev,
@@ -159,10 +191,16 @@ export function useChat(hostWebsite: string = "") {
         } catch (err) {
             // Hide typing indicator
             setisBotProcessing(false);
+            const errorType = (err as Error).name === "AbortError" ? 'timeout' as const : 'network' as const;
             const errorMsg =
-                (err as Error).name === "AbortError"
+                errorType === 'timeout'
                     ? "Request timed out. Please try again."
                     : "Network or server issue.";
+            analytics.track('chat_error', {
+                error_type: errorType,
+                session_id: sessionId.current,
+                page: chatPage,
+            });
             setMessages((prev) => [...prev, { sender: "Error", text: errorMsg }]);
         }
     };
@@ -179,9 +217,20 @@ export function useChat(hostWebsite: string = "") {
         const userMsg = text.trim();
         if (!userMsg || isBotProcessing) return;
 
+        const isFirstMessage = messageCount.current === 0;
+        messageCount.current++;
+
+        analytics.track('chat_message_sent', {
+            message_length: userMsg.length,
+            session_id: sessionId.current,
+            is_first_message: isFirstMessage,
+            page: chatPage,
+        });
+
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
         setisBotProcessing(true);
+        const chatStart = performance.now();
 
         try {
             const controller = new AbortController();
@@ -203,7 +252,21 @@ export function useChat(hostWebsite: string = "") {
             clearTimeout(timeout);
 
             const data = await res.json();
+            const chatDuration = performance.now() - chatStart;
             setisBotProcessing(false);
+
+            analytics.track('chat_message_received', {
+                response_length: (data.success ? data.response : data.error || '').length,
+                session_id: sessionId.current,
+                success: !!data.success,
+                page: chatPage,
+            });
+            analytics.track('api_latency', {
+                endpoint: '/chat',
+                duration_ms: Math.round(chatDuration),
+                status: res.status,
+                method: 'POST',
+            });
 
             setMessages((prev) => [
                 ...prev,
@@ -214,10 +277,16 @@ export function useChat(hostWebsite: string = "") {
             ]);
         } catch (err) {
             setisBotProcessing(false);
+            const errorType = (err as Error).name === "AbortError" ? 'timeout' as const : 'network' as const;
             const errorMsg =
-                (err as Error).name === "AbortError"
+                errorType === 'timeout'
                     ? "Request timed out. Please try again."
                     : "Network or server issue.";
+            analytics.track('chat_error', {
+                error_type: errorType,
+                session_id: sessionId.current,
+                page: chatPage,
+            });
             setMessages((prev) => [...prev, { sender: "Error", text: errorMsg }]);
         }
     };
