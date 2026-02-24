@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useCallback } from "react";
 import { generateColorPalette, applyColorPalette, getThemeColor } from "./colorTheme";
 import styles from "./widget.module.css";
+import { analytics } from "@/app/lib/analytics";
 
 export default function Chat() {
   const searchParams = useSearchParams();
@@ -32,6 +33,9 @@ export default function Chat() {
   useEffect(() => {
     const handler = (event: MessageEvent) => {
       if (event.data && event.data.type === "SEND_MESSAGE" && event.data.text) {
+        analytics.track('embed_widget_parent_message', {
+          message_length: event.data.text.length,
+        });
         sendMessageDirectCb(event.data.text);
       }
     };
@@ -40,6 +44,10 @@ export default function Chat() {
   }, [sendMessageDirectCb]);
 
   const handleClose = () => {
+    analytics.track('embed_widget_close', {
+      session_id: '', // session is inside the hook
+      message_count: messages.length,
+    });
     // Send close message to parent window
     if (typeof window !== "undefined" && window.parent !== window) {
       window.parent.postMessage({ type: "CLOSE_CHAT" }, "*");

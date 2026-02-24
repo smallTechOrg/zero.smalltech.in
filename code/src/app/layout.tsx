@@ -3,6 +3,8 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import NetworkStatusBanner from "./components/common/networkStatus";
 import Script from "next/script";
+import { GA_MEASUREMENT_ID } from "./lib/analytics";
+import { AnalyticsProvider } from "./lib/analyticsProvider";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -33,22 +35,30 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-L1SLDVPSX2"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-L1SLDVPSX2');
-          `}
-        </Script>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}', {
+                  send_page_view: false,
+                  cookie_flags: 'SameSite=None;Secure',
+                });
+              `}
+            </Script>
+          </>
+        )}
       </head>
       <body
         className={`${outfit.variable} antialiased min-h-screen flex flex-col`}
       >
+        <AnalyticsProvider />
         <NetworkStatusBanner />
         <main className="flex-1">{children}</main>
       </body>

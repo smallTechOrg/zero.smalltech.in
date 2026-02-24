@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Script from "next/script";
 import SignUpPage from "./signup/signUpPage";
+import { analytics } from "./lib/analytics";
 
 /* ------------------------------------------------------------------ */
 /*  Static data                                                        */
@@ -261,7 +262,10 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
               </p>
               <div className="flex flex-col sm:flex-row gap-3 max-w-md">
                 <button
-                  onClick={() => openChatWidget("I keep losing customers on my website.")}
+                  onClick={() => {
+                  analytics.track('cta_click', { cta_text: 'Find A Better Way', location: 'hero', page: 'home' });
+                  openChatWidget("I keep losing customers on my website.");
+                }}
                   className="cursor-pointer flex-1 px-6 py-3.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy transition-all flex items-center justify-center gap-2.5 shadow-lg shadow-pacific/20 group transform hover:-translate-y-0.5"
                 >
                   <Icon
@@ -442,6 +446,13 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
 function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => void }) {
   const [yearly, setYearly] = useState(false);
 
+  const handleBillingToggle = (isYearly: boolean) => {
+    setYearly(isYearly);
+    analytics.track('pricing_billing_toggle', {
+      billing_cycle: isYearly ? 'yearly' : 'monthly',
+    });
+  };
+
   return (
     <section className="pt-40 pb-20 lg:pt-56 lg:pb-32 text-center relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -459,7 +470,7 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               type="checkbox"
               className="sr-only peer"
               checked={yearly}
-              onChange={(e) => setYearly(e.target.checked)}
+              onChange={(e) => handleBillingToggle(e.target.checked)}
             />
             <div className="w-14 h-8 bg-sky/50 rounded-full peer-checked:bg-pacific transition-colors" />
             <div className="toggle-dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full shadow-md" />
@@ -518,7 +529,10 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               </li>
             </ul>
             <button
-              onClick={() => openChatWidget("I want to start with the free plan")}
+              onClick={() => {
+                analytics.track('pricing_plan_click', { plan: 'free', billing_cycle: yearly ? 'yearly' : 'monthly', price: '0' });
+                openChatWidget("I want to start with the free plan");
+              }}
               className="cursor-pointer w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Start Free
@@ -571,7 +585,10 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               </li>
             </ul>
             <button
-              onClick={() => openChatWidget("I want to start with the basic plan")}
+              onClick={() => {
+                analytics.track('pricing_plan_click', { plan: 'basic', billing_cycle: yearly ? 'yearly' : 'monthly', price: yearly ? '$3/mo' : '$4/mo' });
+                openChatWidget("I want to start with the basic plan");
+              }}
               className="cursor-pointer w-full py-4 bg-navy text-white rounded-2xl font-bold hover:bg-navy/90 transition-all"
             >
               Select Basic
@@ -608,7 +625,10 @@ function PricingPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
               </li>
             </ul>
             <button
-              onClick={() => openChatWidget("I want to start with the pro plan")}
+              onClick={() => {
+                analytics.track('pricing_plan_click', { plan: 'pro', billing_cycle: yearly ? 'yearly' : 'monthly', price: yearly ? '$10/mo' : '$12/mo' });
+                openChatWidget("I want to start with the pro plan");
+              }}
               className="cursor-pointer w-full py-4 bg-white text-pacific rounded-2xl font-bold hover:bg-sky/30 transition-all shadow-xl"
             >
               Get Pro Access
@@ -643,7 +663,10 @@ function SalesPage({ openChatWidget }: { openChatWidget: (msg?: string) => void 
                 sales assistant that never takes a day off.
               </p>
               <button
-                onClick={() => openChatWidget("I want to optimize my sales funnel with Zer0")}
+                onClick={() => {
+                  analytics.track('cta_click', { cta_text: 'Optimize Sales Funnel', location: 'sales_hero', page: 'sales' });
+                  openChatWidget("I want to optimize my sales funnel with Zer0");
+                }}
                 className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
               >
                 Optimize Sales Funnel
@@ -748,7 +771,10 @@ function SupportPage({ openChatWidget }: { openChatWidget: (msg?: string) => voi
                 human intervention.
               </p>
               <button
-                onClick={() => openChatWidget("I want to scale my customer support with Zer0")}
+                onClick={() => {
+                  analytics.track('cta_click', { cta_text: 'Scale My Support', location: 'support_hero', page: 'support' });
+                  openChatWidget("I want to scale my customer support with Zer0");
+                }}
                 className="cursor-pointer px-8 py-4 bg-navy text-white rounded-full font-bold shadow-lg shadow-navy/20 hover:bg-pacific transition-all"
               >
                 Scale My Support
@@ -846,7 +872,10 @@ function IndustryPage({
               {config.seoText}
             </p>
             <button
-              onClick={() => openChatWidget(`I'd like to learn more about Zer0 for ${industry}`)}
+              onClick={() => {
+                analytics.track('cta_click', { cta_text: `Get ${industry} Case Study`, location: 'industry_hero', page: 'industry', variant: industry });
+                openChatWidget(`I'd like to learn more about Zer0 for ${industry}`);
+              }}
               className="cursor-pointer px-8 py-4 bg-pacific text-white rounded-full font-bold shadow-lg shadow-pacific/20 hover:bg-navy transition-all"
             >
               Get {industry} Case Study
@@ -927,15 +956,28 @@ export default function Home() {
   const [page, setPage] = useState<PageId>("home");
   const [industry, setIndustry] = useState<IndustryKey>("Small Business");
   const openChatWidget = useCallback((message?: string) => {
+    analytics.track('chat_widget_opened', {
+      trigger: 'cta',
+      page,
+      prefilled_message: message,
+    });
     window.dispatchEvent(
       new CustomEvent("open-chat-widget", { detail: message ? { message } : undefined })
     );
-  }, []);
+  }, [page]);
 
   const navigateTo = useCallback(
     (id: PageId, industryParam?: IndustryKey) => {
+      setPage((prev) => {
+        analytics.track('spa_navigation', {
+          from_page: prev,
+          to_page: id,
+          to_industry: industryParam,
+        });
+        analytics.pageView(`/${id === 'home' ? '' : id}${industryParam ? `?industry=${industryParam}` : ''}`, `Zer0 — ${id.charAt(0).toUpperCase() + id.slice(1)}`);
+        return id;
+      });
       if (id === "industry" && industryParam) setIndustry(industryParam);
-      setPage(id);
       window.scrollTo(0, 0);
     },
     []
@@ -984,12 +1026,17 @@ export default function Home() {
                 Pricing
               </button>
               <button
-                onClick={() =>
+                onClick={() => {
+                  analytics.track('external_link_click', {
+                    link_text: 'About',
+                    link_url: 'https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1',
+                    location: 'header',
+                  });
                   window.open(
                     "https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1",
                     "_blank"
-                  )
-                }
+                  );
+                }}
                 className="cursor-pointer text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
               >
                 About
@@ -1052,6 +1099,7 @@ export default function Home() {
               href="https://calendly.com/admin-madhyamakist/30min"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => analytics.track('external_link_click', { link_text: 'Book a Demo', link_url: 'https://calendly.com/admin-madhyamakist/30min', location: 'footer' })}
             >
               <button className="cursor-pointer px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">
                 Book a Demo

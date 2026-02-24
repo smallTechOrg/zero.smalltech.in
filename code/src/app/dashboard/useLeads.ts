@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { HistoryItem, LeadRowData, Message } from '../models/leads';
+import { analytics } from '@/app/lib/analytics';
 
 export type LeadStatus = 'OPEN' | 'CLOSED' | 'QUALIFYING';
 
@@ -46,6 +47,13 @@ export function useLeads(initial: LeadRowData[] = []) {
 //  Updates the status of a lead row (OPEN / CLOSED / QUALIFYING)
 
   const onChangeStatus = useCallback(async (session_id: string, status: LeadStatus) => {
+    const prevRow = rows.find(r => r.session_id === session_id);
+    analytics.track('dashboard_lead_status_change', {
+      session_id,
+      from_status: prevRow?.status ?? 'unknown',
+      to_status: status,
+      domain: prevRow?.domain,
+    });
     setRows((prev) => prev.map((r) => (r.session_id === session_id ? { ...r, status } : r)));
     setSaving((s) => ({ ...s, [session_id]: true }));
     try {
@@ -60,6 +68,10 @@ export function useLeads(initial: LeadRowData[] = []) {
   // Saves updated remarks for a session
 
   const onSaveRemarks = useCallback(async (session_id: string, remarks: string) => {
+    analytics.track('dashboard_lead_remarks_save', {
+      session_id,
+      remarks_length: remarks.length,
+    });
     setSaving((s) => ({ ...s, [session_id]: true }));
     try {
       await patchLead({ session_id, remarks });
