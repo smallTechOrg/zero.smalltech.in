@@ -5,6 +5,7 @@ import { useEffect, useCallback } from "react";
 import { generateColorPalette, applyColorPalette, getThemeColor } from "./colorTheme";
 import styles from "./widget.module.css";
 import { analytics } from "@/app/lib/analytics";
+import FormattedMessage from "@/app/components/common/formattedMessage";
 
 export default function Chat() {
   const searchParams = useSearchParams();
@@ -111,7 +112,11 @@ export default function Chat() {
                   isUser ? styles.messageBubbleUser : styles.messageBubbleBot
                 }`}
               >
-                <p className={styles.messageText}>{msg.text}</p>
+                {isUser ? (
+                  <p className={styles.messageText}>{msg.text}</p>
+                ) : (
+                  <FormattedMessage text={msg.text} className={styles.messageText} />
+                )}
               </div>
             </div>
           );

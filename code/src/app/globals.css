@@ -96,3 +96,32 @@ input:checked ~ .toggle-dot {
 .crm-item {
   transition: all 0.5s ease;
 }
+
+/* Markdown inside chat bot messages */
+.chat-markdown p {
+  margin: 0 0 0.4em 0;
+}
+.chat-markdown p:last-child {
+  margin-bottom: 0;
+}
+.chat-markdown ul,
+.chat-markdown ol {
+  margin: 0.3em 0;
+  padding-left: 1.4em;
+}
+.chat-markdown li {
+  margin-bottom: 0.15em;
+}
+.chat-markdown h1,
+.chat-markdown h2,
+.chat-markdown h3 {
+  margin: 0.4em 0 0.2em 0;
+  font-size: 1em;
+  font-weight: 600;
+}
+.chat-markdown strong {
+  font-weight: 600;
+}
+.chat-markdown em {
+  font-style: italic;
+}
