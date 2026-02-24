@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import "./components/core/footer.css";
+@import "./components/typography.css";
+@import './components/common/dropdown.css';
+
+@theme inline {
+  --color-cream: #c4bbaf;
+  --color-cinereous: #A5978B;
+  --color-brown: #5c4742;
+  --color-liver: #5C4742;
+  --color-redwood: #8D5B4C;
+  --color-caput: #5A2A27;
+  --color-licorice: #1D0E0C;
+  --color-khaki:#A5978B;
+  --color-rose:#B8887A;
+  --color-almond-silk: #E7C9C6;
+  --color-seashell-pink: #F2E3E1;
+  --color-bg-gradient:linear-gradient(to bottom, var(--color-almond-silk), var(--color-seashell-pink));
+  --color-deep-mocha:#473733;
+  --color-liver-brown:#5C4742;
+  --color-mauve-bark:#6A534D;
+  --color-expresso: #5A2A27;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-outfit), sans-serif;
+  margin: 0;
+  padding: 0;
+}
+/* For better snap behavior on iOS Safari */
+html, body {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Landing page animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes float-delayed {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-10px) translateX(10px); }
+  100% { transform: translateY(0px) translateX(0px); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes highlight-row {
+  0% { background: transparent; }
+  10% { background: rgba(59, 130, 246, 0.1); }
+  100% { background: transparent; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float-delayed 8s ease-in-out infinite; }
+.cursor-blink { animation: blink 1s infinite; }
+.row-update { animation: highlight-row 2s ease-out forwards; }
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.page-content {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.subpage-visual-blob {
+  background: linear-gradient(135deg, #3b82f6 0%, #818cf8 100%);
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+.toggle-dot {
+  transition: transform 0.3s ease-in-out;
+}
+input:checked ~ .toggle-dot {
+  transform: translateX(100%);
+}
+
+.crm-item {
+  transition: all 0.5s ease;
+}

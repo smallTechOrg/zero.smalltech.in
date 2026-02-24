@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer components {
+:root {
+  --background: var(--color-bg-gradient);
+  --foreground: var(--color-deep-mocha);
+  --font-sans: var(--font-montserrat);
+}
+
+h1 {
+  @apply font-[500]
+  text-[24px]
+  sm:text-[30px]
+  md:text-[32px]
+  lg:text-3xl
+  text-deep-mocha;
+}
+h2 {
+  @apply font-[400]
+  text-[18px]
+  sm:text-[22px]
+  md:text-[26px]
+  lg:text-2xl
+}
+h3 {
+  @apply font-[300]
+  text-[16px]
+  sm:text-[18px]
+  md:text-[20px]
+  lg:text-xl
+  text-mauve-bark
+}
+p {
+  @apply 
+  
+  font-[300]
+  text-[14px] 
+  sm:text-[16px]
+  md:text-[17px]
+  lg:text-lg
+  text-liver-brown;
+}
+
+}
