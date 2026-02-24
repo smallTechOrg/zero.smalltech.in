@@ -11,15 +11,15 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "ZER0 — AI Agents for Small Businesses",
+  title: "Zer0 — AI Agents for Small Businesses",
   description:
     "AI Agents for Small Businesses. Embeddable Smart Agent for your website.",
   openGraph: {
-    title: "ZER0 — AI Agents for Small Businesses",
+    title: "Zer0 — AI Agents for Small Businesses",
     description:
       "AI Agents for Small Businesses. Embeddable Smart Agent for your website.",
     url: "https://zero.smalltech.in",
-    siteName: "ZER0",
+    siteName: "Zer0",
     locale: "en_US",
     type: "website",
   },
