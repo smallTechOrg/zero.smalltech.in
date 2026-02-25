@@ -43,6 +43,7 @@ export function useChat(hostWebsite: string = "") {
     const [isClient, setIsClient] = useState(false);
     const [isBotProcessing, setisBotProcessing] = useState(true); // Start true to show typing on initial load
     const chatBoxText = useRef<HTMLDivElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const sessionId = useRef<string>("");
     const messageCount = useRef(0);
     const chatPage = hostWebsite ? 'embed' as const : 'chat' as const;
@@ -137,6 +138,8 @@ export function useChat(hostWebsite: string = "") {
 
         setMessages((prev) => [...prev, { sender: "You", text: userMsg }]);
         setInput("");
+        // Re-focus input after sending
+        inputRef.current?.focus();
         // Show typing indicator
         setisBotProcessing(true);
         const chatStart = performance.now();
@@ -209,6 +212,10 @@ export function useChat(hostWebsite: string = "") {
     useEffect(() => {
         if (chatBoxText.current) {
             chatBoxText.current.scrollTop = chatBoxText.current.scrollHeight;
+        }
+        // Re-focus input after bot finishes responding
+        if (!isBotProcessing) {
+            inputRef.current?.focus();
         }
     }, [messages, isBotProcessing]);
 
@@ -293,6 +300,7 @@ export function useChat(hostWebsite: string = "") {
 
     return {
         chatBoxText,
+        inputRef,
         messages,
         input,
         isClient,
