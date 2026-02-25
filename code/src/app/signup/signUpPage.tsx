@@ -80,11 +80,7 @@ export default function SignUpPage() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            domain: new URL(
-              website.trim().startsWith("http")
-                ? website.trim()
-                : `https://${website.trim()}`
-            ).hostname,
+            domain: domainData.key,
             agent_type: "sales",
             type: "company",
             text: customPrompt.trim(),
