@@ -20,6 +20,7 @@ export default function Chat() {
 
   const {
     chatBoxText,
+    inputRef,
     messages,
     input,
     isClient,
@@ -143,6 +144,7 @@ export default function Chat() {
           <form onSubmit={sendMessage} className={styles.inputForm}>
             <div className={styles.inputWrapper}>
               <input
+                ref={inputRef}
                 type="text"
                 className={styles.input}
                 placeholder="Type your message..."
@@ -150,6 +152,7 @@ export default function Chat() {
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isBotProcessing}
                 aria-label="Message input"
+                autoFocus
               />
             </div>
             <button

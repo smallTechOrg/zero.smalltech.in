@@ -6,6 +6,7 @@ import FormattedMessage from "@/app/components/common/formattedMessage";
 export default function Chat() {
   const {
     chatBoxText,
+    inputRef,
     messages,
     input,
     isClient,
@@ -62,11 +63,13 @@ export default function Chat() {
         >
           <div className="flex items-center bg-navy rounded-xl border border-pacific px-3 py-2 shadow-md">
             <input
+              ref={inputRef}
               type="text"
               className="flex-1 text-white placeholder-sky bg-transparent outline-none font-[200]"
               placeholder="Type a message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              autoFocus
               required
             />
             <button
