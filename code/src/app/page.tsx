@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Script from "next/script";
 import SignUpPage from "./signup/signUpPage";
 import { analytics } from "./lib/analytics";
@@ -253,7 +255,7 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
               </div>
               <h1 className="text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-navy mb-8 leading-[0.95]">
                 Embeddable <br />
-                Smart Agent
+                Smart Agent{" "}
                 <br />
                 <span className="text-pacific">For Your Site</span>
               </h1>
@@ -375,6 +377,44 @@ function HomePage({ openChatWidget }: { openChatWidget: (msg?: string) => void }
                 </p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO content — substantive text about Zer0 for Google to index.
+          Google requires 300+ words to consider a page "substantial content".
+          This section also adds keyword-rich copy for ranking. */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-4xl font-black text-navy mb-6 tracking-tight leading-tight">
+                The smartest AI agent for your small business website.
+              </h2>
+              <p className="text-navy/60 mb-6 leading-relaxed">
+                Zer0 is an embeddable AI agent built specifically for small businesses. Unlike enterprise chatbots that require months of setup and six-figure budgets, Zer0 goes live on your website in minutes — with zero coding required.
+              </p>
+              <p className="text-navy/60 mb-6 leading-relaxed">
+                Our AI understands your products, services, and FAQs right out of the box. It qualifies leads, answers customer queries, and books meetings automatically — 24 hours a day, 7 days a week, even when your team is offline.
+              </p>
+              <p className="text-navy/60 leading-relaxed">
+                Trusted by businesses in e-commerce, real estate, healthcare, and more, Zer0 helps you compete with larger companies by delivering a premium customer experience at an SMB-friendly price. Start free with 200 conversations per month, or upgrade to Pro for unlimited conversations and backend integrations.
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { label: "Setup Time", value: "< 5 min", desc: "Paste one line of code and you're live on any website." },
+                { label: "Industries", value: "All", desc: "Built for every industry and sector, from retail to healthcare." },
+                { label: "Free Conversations", value: "200", desc: "Start free — no credit card required." },
+                { label: "Uptime", value: "99.9%", desc: "Always on — nights, weekends, and holidays." },
+              ].map((s) => (
+                <div key={s.label} className="p-6 bg-sky/10 rounded-3xl border border-sky/20">
+                  <div className="text-3xl font-black text-navy mb-1">{s.value}</div>
+                  <div className="text-xs font-bold text-pacific uppercase tracking-wider mb-2">{s.label}</div>
+                  <p className="text-navy/60 text-xs leading-relaxed">{s.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -952,9 +992,16 @@ function AboutPage() {
 /*  Root Page                                                          */
 /* ================================================================== */
 
-export default function Home() {
-  const [page, setPage] = useState<PageId>("home");
-  const [industry, setIndustry] = useState<IndustryKey>("Small Business");
+export default function Home({
+  initialPage = "home",
+  initialIndustry = "Small Business",
+}: {
+  initialPage?: PageId;
+  initialIndustry?: IndustryKey;
+} = {}) {
+  const router = useRouter();
+  const [page, setPage] = useState<PageId>(initialPage);
+  const [industry, setIndustry] = useState<IndustryKey>(initialIndustry);
   const openChatWidget = useCallback((message?: string) => {
     analytics.track('chat_widget_opened', {
       trigger: 'cta',
@@ -968,19 +1015,24 @@ export default function Home() {
 
   const navigateTo = useCallback(
     (id: PageId, industryParam?: IndustryKey) => {
-      setPage((prev) => {
-        analytics.track('spa_navigation', {
-          from_page: prev,
-          to_page: id,
-          to_industry: industryParam,
-        });
-        analytics.pageView(`/${id === 'home' ? '' : id}${industryParam ? `?industry=${industryParam}` : ''}`, `Zer0 — ${id.charAt(0).toUpperCase() + id.slice(1)}`);
-        return id;
+      const url =
+        id === "home" ? "/" :
+        id === "industry" ? `/industry${industryParam ? `?industry=${encodeURIComponent(industryParam)}` : ""}` :
+        `/${id}`;
+
+      analytics.track('spa_navigation', {
+        from_page: page,
+        to_page: id,
+        to_industry: industryParam,
       });
+      analytics.pageView(url, `Zer0 — ${id.charAt(0).toUpperCase() + id.slice(1)}`);
+
+      setPage(id);
       if (id === "industry" && industryParam) setIndustry(industryParam);
+      router.push(url);
       window.scrollTo(0, 0);
     },
-    []
+    [page, router]
   );
 
   return (
@@ -1004,53 +1056,70 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div
-              className="flex-shrink-0 flex items-center gap-2 cursor-pointer group"
-              onClick={() => navigateTo("home")}
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex-shrink-0 flex items-center gap-2 group"
+              onClick={(e) => { e.preventDefault(); navigateTo("home"); }}
             >
-              <div className="w-9 h-9 bg-pacific rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-pacific/20">
-                <Icon icon="solar:chat-round-dots-linear" width={22} />
-              </div>
+              {/* img tag ensures Google can index this as an image (fixes "0 img tags" warning) */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.svg"
+                alt="Zer0 logo"
+                width={36}
+                height={36}
+                className="group-hover:rotate-12 transition-transform duration-300"
+              />
               <div className="flex flex-col leading-tight">
                 <span className="text-xl font-bold text-navy">Zer0</span>
                 <span className="text-[10px] font-medium text-navy/40 tracking-wide">AI Agents for Small Businesses</span>
               </div>
-            </div>
+            </Link>
 
-            {/* Links */}
+            {/* Nav links — using <a> tags with href so Google indexes them as real links */}
             <div className="hidden lg:flex items-center space-x-8">
-              <button
-                onClick={() => navigateTo("pricing")}
-                className={`cursor-pointer text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
+              <a
+                href="/pricing"
+                onClick={(e) => { e.preventDefault(); navigateTo("pricing"); }}
+                className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
               >
                 Pricing
-              </button>
-              <button
-                onClick={() => {
-                  analytics.track('external_link_click', {
-                    link_text: 'About',
-                    link_url: 'https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1',
-                    location: 'header',
-                  });
-                  window.open(
-                    "https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1",
-                    "_blank"
-                  );
-                }}
-                className="cursor-pointer text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
+              </a>
+              <a
+                href="/sales"
+                onClick={(e) => { e.preventDefault(); navigateTo("sales"); }}
+                className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "sales" ? "text-pacific" : "text-navy/70"}`}
+              >
+                Sales
+              </a>
+              <a
+                href="/support"
+                onClick={(e) => { e.preventDefault(); navigateTo("support"); }}
+                className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "support" ? "text-pacific" : "text-navy/70"}`}
+              >
+                Support
+              </a>
+              <a
+                href="https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => analytics.track('external_link_click', { link_text: 'About', link_url: 'https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1', location: 'header' })}
+                className="text-sm font-semibold text-navy/70 hover:text-pacific transition-colors"
               >
                 About
-              </button>
+              </a>
             </div>
 
             {/* CTA */}
             <div className="hidden md:flex items-center space-x-4">
-              <button
-                onClick={() => navigateTo("signup")}
-                className="cursor-pointer px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
+              <a
+                href="/signup"
+                onClick={(e) => { e.preventDefault(); navigateTo("signup"); }}
+                className="px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
                 Sign Up for Free
-              </button>
+              </a>
             </div>
 
             {/* Mobile hamburger placeholder */}
@@ -1088,35 +1157,47 @@ export default function Home() {
             </a>
           </div>
 
+          {/* Footer nav links — adds internal linking for SEO */}
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-12">
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Home</a>
+            <a href="/pricing" onClick={(e) => { e.preventDefault(); navigateTo("pricing"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Pricing</a>
+            <a href="/sales" onClick={(e) => { e.preventDefault(); navigateTo("sales"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Sales Agent</a>
+            <a href="/support" onClick={(e) => { e.preventDefault(); navigateTo("support"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Support Agent</a>
+            <a href="/industry" onClick={(e) => { e.preventDefault(); navigateTo("industry"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Industries</a>
+            <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo("about"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">About</a>
+          </div>
+
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
-            <button
-              onClick={() => navigateTo("signup")}
-              className="cursor-pointer px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
+            <a
+              href="/signup"
+              onClick={(e) => { e.preventDefault(); navigateTo("signup"); }}
+              className="px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
               Sign Up for Free
-            </button>
+            </a>
             <a
               href="https://calendly.com/admin-madhyamakist/30min"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => analytics.track('external_link_click', { link_text: 'Book a Demo', link_url: 'https://calendly.com/admin-madhyamakist/30min', location: 'footer' })}
+              className="px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm"
             >
-              <button className="cursor-pointer px-8 py-3.5 border border-white/20 rounded-full font-bold hover:bg-white/5 transition-all text-sm">
-                Book a Demo
-              </button>
+              Book a Demo
             </a>
           </div>
 
           <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div
-              className="flex items-center gap-2 cursor-pointer"
-              onClick={() => navigateTo("home")}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
+              href="/"
+              className="flex items-center gap-2"
+              onClick={(e) => { e.preventDefault(); navigateTo("home"); }}
             >
-              <div className="w-8 h-8 bg-sky rounded flex items-center justify-center text-navy">
-                <Icon icon="solar:chat-round-dots-linear" width={18} />
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo.svg" alt="Zer0" width={32} height={32} />
               <span className="text-xl font-bold tracking-tighter">Zer0</span>
-            </div>
+            </a>
             <p className="text-white text-sm font-medium">
               &copy; 2026 Zer0. Built for the modern web.
             </p>
