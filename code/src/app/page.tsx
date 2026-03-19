@@ -1077,29 +1077,29 @@ export default function Home({
               </div>
             </Link>
 
-            {/* Nav links — using <a> tags with href so Google indexes them as real links */}
+            {/* Nav links — using Next.js Link so Google indexes them as real links */}
             <div className="hidden lg:flex items-center space-x-8">
-              <a
+              <Link
                 href="/pricing"
                 onClick={(e) => { e.preventDefault(); navigateTo("pricing"); }}
                 className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "pricing" ? "text-pacific" : "text-navy/70"}`}
               >
                 Pricing
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/sales"
                 onClick={(e) => { e.preventDefault(); navigateTo("sales"); }}
                 className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "sales" ? "text-pacific" : "text-navy/70"}`}
               >
                 Sales
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/support"
                 onClick={(e) => { e.preventDefault(); navigateTo("support"); }}
                 className={`text-sm font-semibold hover:text-pacific transition-colors ${page === "support" ? "text-pacific" : "text-navy/70"}`}
               >
                 Support
-              </a>
+              </Link>
               <a
                 href="https://smalltech.in/?utm_source=zero&utm_medium=website&utm_campaign=z1"
                 target="_blank"
@@ -1113,13 +1113,13 @@ export default function Home({
 
             {/* CTA */}
             <div className="hidden md:flex items-center space-x-4">
-              <a
+              <Link
                 href="/signup"
                 onClick={(e) => { e.preventDefault(); navigateTo("signup"); }}
                 className="px-5 py-2.5 text-sm font-bold text-white bg-pacific rounded-full hover:bg-navy hover:shadow-lg hover:shadow-pacific/20 transition-all transform hover:-translate-y-0.5"
               >
                 Sign Up for Free
-              </a>
+              </Link>
             </div>
 
             {/* Mobile hamburger placeholder */}
@@ -1159,23 +1159,22 @@ export default function Home({
 
           {/* Footer nav links — adds internal linking for SEO */}
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-12">
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a href="/" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Home</a>
-            <a href="/pricing" onClick={(e) => { e.preventDefault(); navigateTo("pricing"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Pricing</a>
-            <a href="/sales" onClick={(e) => { e.preventDefault(); navigateTo("sales"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Sales Agent</a>
-            <a href="/support" onClick={(e) => { e.preventDefault(); navigateTo("support"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Support Agent</a>
-            <a href="/industry" onClick={(e) => { e.preventDefault(); navigateTo("industry"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Industries</a>
-            <a href="/about" onClick={(e) => { e.preventDefault(); navigateTo("about"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">About</a>
+            <Link href="/" onClick={(e) => { e.preventDefault(); navigateTo("home"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Home</Link>
+            <Link href="/pricing" onClick={(e) => { e.preventDefault(); navigateTo("pricing"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Pricing</Link>
+            <Link href="/sales" onClick={(e) => { e.preventDefault(); navigateTo("sales"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Sales Agent</Link>
+            <Link href="/support" onClick={(e) => { e.preventDefault(); navigateTo("support"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Support Agent</Link>
+            <Link href="/industry" onClick={(e) => { e.preventDefault(); navigateTo("industry"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">Industries</Link>
+            <Link href="/about" onClick={(e) => { e.preventDefault(); navigateTo("about"); }} className="text-sm text-white/60 hover:text-white transition-colors font-medium">About</Link>
           </div>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16">
-            <a
+            <Link
               href="/signup"
               onClick={(e) => { e.preventDefault(); navigateTo("signup"); }}
               className="px-8 py-3.5 bg-white text-navy rounded-full font-bold hover:bg-sky/30 transition-all text-sm"
             >
               Sign Up for Free
-            </a>
+            </Link>
             <a
               href="https://calendly.com/admin-madhyamakist/30min"
               target="_blank"

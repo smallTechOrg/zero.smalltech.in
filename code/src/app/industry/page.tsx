@@ -20,11 +20,28 @@ type IndustryKey =
   | "Sales"
   | "Small Business";
 
+const VALID_INDUSTRIES = new Set<string>([
+  "E-Commerce",
+  "Customer Service",
+  "Education",
+  "Enterprises",
+  "Healthcare",
+  "Insurance",
+  "IT Support",
+  "Real Estate",
+  "Recruitment",
+  "Sales",
+  "Small Business",
+]);
+
 // Reads the ?industry= query param and renders the main Home page
 // pre-scrolled to the industry section with the matching industry selected.
 function IndustryRouteInner() {
   const params = useSearchParams();
-  const industry = (params.get("industry") ?? "Small Business") as IndustryKey;
+  const raw = params.get("industry") ?? "";
+  const industry: IndustryKey = VALID_INDUSTRIES.has(raw)
+    ? (raw as IndustryKey)
+    : "Small Business";
   return <Home initialPage="industry" initialIndustry={industry} />;
 }
 

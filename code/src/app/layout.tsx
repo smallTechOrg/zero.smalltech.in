@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     "no-code AI agent",
     "small business automation",
     "AI chatbot for websites",
-    "AI chat agent for websiites",
+    "AI chat agent for websites",
     "AI chatbot for real estate",
     "AI chatbot for ecommerce websites"
   ],
