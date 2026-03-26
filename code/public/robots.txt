@@ -7,5 +7,9 @@ User-agent: *
 # Allow crawling of all public pages
 Allow: /
 
+# Disallow specific pages from being crawled
+Disallow: /embed
+Disallow: /dashboard
+
 # Tell crawlers where to find the full list of pages
 Sitemap: https://zero.smalltech.in/sitemap.xml
