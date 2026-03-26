@@ -998,7 +998,7 @@ export default function Home({
 }: {
   initialPage?: PageId;
   initialIndustry?: IndustryKey;
-} = {}) {
+}) {
   const router = useRouter();
   const [page, setPage] = useState<PageId>(initialPage);
   const [industry, setIndustry] = useState<IndustryKey>(initialIndustry);
