@@ -89,7 +89,7 @@ export function useChat(hostWebsite: string = "") {
         };
 
         init();
-    }, [hostWebsite]);
+    }, [hostWebsite, chatPage]);
 
     // send message
     const sendMessage = async (e: React.FormEvent) => {

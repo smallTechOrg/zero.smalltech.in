@@ -343,7 +343,7 @@ export default function DashboardPage({ initialRows, domainFilter }: DashboardPa
         );
       },
     },
-  ], [expanded, histories, historyLoading, onChangeStatus, onSaveRemarks, onToggleActive, setExpanded, loadHistory, saving, domainFilter, copiedLink, deleteConfirm]);
+  ], [expanded, histories, historyLoading, onChangeStatus, onSaveRemarks, onToggleActive, setExpanded, loadHistory, saving, domainFilter, deleteConfirm]);
 
   const table = useReactTable({
     data: filteredRows,
