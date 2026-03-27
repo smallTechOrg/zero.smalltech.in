@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Home from "../page";
+import Home from "../homePage";
 
 // Page-specific SEO metadata 
 export const metadata: Metadata = {

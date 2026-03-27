@@ -63,7 +63,7 @@ export function useLeads(initial: LeadRowData[] = []) {
     } finally {
       setSaving((s) => ({ ...s, [session_id]: false }));
     }
-  }, []);
+  }, [rows]);
 
   // Saves updated remarks for a session
 

@@ -6,6 +6,7 @@
 
 import { ImageResponse } from "next/og";
 
+export const dynamic = "force-static";
 export const alt = "Zer0 — AI Agents for Small Businesses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

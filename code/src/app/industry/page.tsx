@@ -5,7 +5,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import Home from "../page";
+import Home from "../homePage";
 
 type IndustryKey =
   | "E-Commerce"
