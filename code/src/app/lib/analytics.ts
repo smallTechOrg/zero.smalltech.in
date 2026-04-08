@@ -16,7 +16,15 @@
 /* ================================================================== */
 
 export const GA_MEASUREMENT_ID =
-  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? 'G-L1SLDVPSX2';
+  (
+    globalThis as {
+      process?: {
+        env?: {
+          NEXT_PUBLIC_GA_MEASUREMENT_ID?: string;
+        };
+      };
+    }
+  ).process?.env?.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 /* ================================================================== */
 /*  Low-level gtag helpers                                             */
