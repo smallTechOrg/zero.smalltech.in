@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-      - deploy
+      - staging
 
 permissions:
   contents: read
@@ -47,7 +47,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   deploy-staging-vercel:
-    if: github.ref_name == 'deploy'
+    if: github.ref_name == 'staging'
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
