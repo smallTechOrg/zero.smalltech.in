@@ -71,6 +71,3 @@ jobs:
             --build-env NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} \
             --token=${{ vars.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
         working-directory: ./code
-      - name: Alias to Staging Domain 🔗
-        run: vercel alias set ${{ steps.deploy.outputs.url }} ${{ vars.STAGING_DOMAIN }} --token=${{ vars.VERCEL_TOKEN }}
-        working-directory: ./code
