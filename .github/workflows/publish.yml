@@ -66,8 +66,12 @@ jobs:
       - name: Deploy Staging to Vercel 🚀
         id: deploy
         run: |
-          echo "url=$(vercel deploy --prod --yes \
-            --build-env NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }} \
-            --build-env NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} \
-            --token=${{ vars.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
+          API_URL="${{ vars.NEXT_PUBLIC_API_URL }}"
+          GA_ID="${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}"
+          TOKEN="${{ vars.VERCEL_TOKEN }}"
+          url=$(vercel deploy --prod --yes \
+            --build-env "NEXT_PUBLIC_API_URL=$API_URL" \
+            --build-env "NEXT_PUBLIC_GA_MEASUREMENT_ID=$GA_ID" \
+            --token="$TOKEN")
+          echo "url=$url" >> $GITHUB_OUTPUT
         working-directory: ./code
